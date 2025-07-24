@@ -1,37 +1,40 @@
-/* src/css/App.css */
-
-#root {
-  /* IMPORTANT: Remove these properties from the original #root styles */
-  /* max-width: 1280px; */
-  /* margin: 0 auto; */
-  /* padding: 2rem; */
-
-  /* Make #root fill its parent (body) completely */
-  width: 100%;
-  height: 100%;
-
-  /* Ensure #root is a flex container to center its child (Login component) */
-  display: flex;
-  align-items: center;    /* Vertical centering for Login component */
-  justify-content: center; /* Horizontal centering for Login component */
-
-  /* Set the background color for the entire page, outside the login box.
-     This color matches the dark purple/gray from your screenshot. */
-  background-color: #33213c; 
-
-  /* text-align: center; (optional, keep if other App content needs it) */
+/* Reset & Base Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Other styles that might be specific to your App component or general layout */
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #33213c; /* Matches your dark purple/gray tone */
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* Root Container */
+#root {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Utility & App Styles */
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }

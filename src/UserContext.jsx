@@ -19,10 +19,16 @@ export const UserProvider = ({ children }) => {
       }
 
       if (savedUser) {
-        setUser(JSON.parse(savedUser)); // This might fail if not valid JSON
+        try {
+          const parsedUser = JSON.parse(savedUser);
+          setUser(parsedUser);
+        } catch (jsonErr) {
+          console.error('❌ Invalid JSON in localStorage "user":', jsonErr);
+          localStorage.removeItem('user'); // Clear invalid entry
+        }
       }
     } catch (err) {
-      console.error('❌ Error loading session from localStorage:', err);
+      console.error('❌ Error accessing localStorage:', err);
     }
   }, []);
 

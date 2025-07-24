@@ -16,12 +16,39 @@ function Login() {
   const handleLogin = async () => {
     setError('');
     try {
-      const res = await axiosInstance.post('/user/login', { phoneNumber, password });
-      // Assume backend returns token and user object
-      const { token, user } = res.data;
-      login(user, token);
+      // Login request
+      const res = await axiosInstance.post('/user/login', {
+        phoneNumber: phoneNumber.trim(),
+        password: password.trim(),
+      });
+
+      if (!res.data.success) {
+        setError(res.data.message || 'Нэвтрэхэд алдаа гарлаа');
+        return;
+      }
+
+      const accessToken = res.data.accessToken;
+
+      // Set Authorization header for future requests
+      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
+      // Fetch user info after login
+      const userRes = await axiosInstance.get('/user/me');
+
+      if (!userRes.data.success) {
+        setError(userRes.data.message || 'Хэрэглэгчийн мэдээллийг авах боломжгүй байна');
+        return;
+      }
+
+      const user = userRes.data.user;
+
+      // Update context
+      login(user, accessToken);
+
+      // Navigate to home page
       navigate('/home');
     } catch (err) {
+      console.error('Login error:', err.response || err);
       setError(err.response?.data?.message || 'Нэвтрэхэд алдаа гарлаа');
     }
   };
