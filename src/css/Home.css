@@ -11,7 +11,7 @@
   border-bottom: 2px solid #dcdcdc;
 }
 
-.logo {
+.logoo {
   display: flex;
   align-items: center;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -39,15 +39,16 @@
   gap: 10px;
 }
 
-.login-btn {
+.loginn-btn {
   background: none;
   border: none;
   font-weight: bold;
   font-size: 16px;
   cursor: pointer;
+  color: black;
 }
 
-.register-btn {
+.registerr-btn {
   background: black;
   color: white;
   padding: 8px 18px;
@@ -68,6 +69,7 @@
 .hero-text {
   flex: 1;
   max-width: 650px;
+  margin-right: 50px;
 }
 
 .hero-text h1 {
@@ -79,7 +81,7 @@
 .hero-text p {
   font-size: 16px;
   margin-bottom: 25px;
-  color: #333;
+  color: #838383;
 }
 
 .hero-buttons {
@@ -107,8 +109,8 @@
 }
 
 .hero-video img {
-  max-width: 660px;
-  margin-right: 100px;
+  max-width: 550px;
+  /* margin-right: 100px; */
   border-radius: 20px;
 }
 .second-hero {
@@ -201,7 +203,7 @@
 }
 
 .price-card {
-  background-color: rgb(255, 255, 255);
+  /* background-color: rgb(255, 255, 255); */
   padding: 20px 30px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);

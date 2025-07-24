@@ -1,12 +1,11 @@
 import React from "react";
-import "../css/Home.css";
-
+import "../css/Home.css"
 function Home() {
   return (
     <div>
       <div className="home-container">
         <header className="navbar">
-          <div className="logo">e-Drum</div>
+          <div className="logoo">e-Drum</div>
 
           <nav className="nav-buttons">
             <button className="nav-btn">Хичээлүүд</button>
@@ -16,8 +15,8 @@ function Home() {
           </nav>
 
           <div className="auth-buttons">
-            <button className="login-btn">Нэвтрэх</button>
-            <button className="register-btn">Бүртгүүлэх</button>
+            <button className="loginn-btn">Нэвтрэх</button>
+            <button className="registerr-btn">Бүртгүүлэх</button>
           </div>
         </header>
 
@@ -139,7 +138,7 @@ function Home() {
             <p>Тус бүр нь төлж, хүссэн хичээлээ ав</p>
           </div>
           <div className="price-cards">
-            <div className="price-card">
+            <div className="price-card" style={{backgroundColor:"white", color:"black"}}>
               <h3>Үнэгүй хичээлүүд</h3>
               <h3>₮0</h3>
               <p>Эхний 3 хичээл</p>
