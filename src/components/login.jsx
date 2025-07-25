@@ -8,6 +8,7 @@ import { UserContext } from '../UserContext';
 function Login() {
   const navigate = useNavigate();
   const { login } = useContext(UserContext);
+
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -16,33 +17,34 @@ function Login() {
   const handleLogin = async () => {
     setError('');
     setIsLoading(true);
-    
+
     try {
-      // Login request
+      // Login API call
       const res = await axiosInstance.post('/user/login', {
         phoneNumber: phoneNumber.trim(),
         password: password.trim(),
       });
-      
-      if (!res.data.success) {
-        setError(res.data.message || 'Нэвтрэхэд алдаа гарлаа');
+
+      console.log('✅ Login response:', res.data);
+
+      const accessToken = res.data.accessToken;
+      const user = res.data.user;
+
+      if (!accessToken || !user) {
+        console.log('❌ Missing token or user');
+        setError('Нэвтрэхэд алдаа гарлаа');
         return;
       }
 
-      const accessToken = res.data.accessToken;
-      const user = res.data.user; // Get user data directly from login response
-      
-      // Set Authorization header for future requests
+      // Save token and user to context
       axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-      
-      // Update context with user data from login response
       login(user, accessToken);
-      
-      // Navigate to StudentPortal after successful login
+
+      console.log('➡️ Navigating to /student-portal');
       navigate('/student-portal');
-      
+
     } catch (err) {
-      console.error('Login error:', err.response || err);
+      console.error('❌ Login error:', err.response || err);
       setError(err.response?.data?.message || 'Нэвтрэхэд алдаа гарлаа');
     } finally {
       setIsLoading(false);
@@ -60,11 +62,11 @@ function Login() {
       <button className="back-button" onClick={() => navigate(-1)}>
         <FaArrowLeft />
       </button>
-      
+
       <div className="login-box">
         <h2>Нэвтрэх</h2>
         <p className="subtitle">Өөрийн бүртгэлээр нэвтэрнэ үү</p>
-        
+
         <input
           type="text"
           name="phoneNumber"
@@ -75,7 +77,7 @@ function Login() {
           onKeyPress={handleKeyPress}
           disabled={isLoading}
         />
-        
+
         <input
           type="password"
           name="password"
@@ -86,21 +88,21 @@ function Login() {
           onKeyPress={handleKeyPress}
           disabled={isLoading}
         />
-        
+
         {error && <div className="error-text">{error}</div>}
-        
+
         <div className="forgot-password">
           <a href="#">Нууц үг мартсан?</a>
         </div>
-        
-        <button 
-          className="login-btn" 
+
+        <button
+          className="login-btn"
           onClick={handleLogin}
           disabled={isLoading || !phoneNumber.trim() || !password.trim()}
         >
-          {isLoading ? 'Нэвтэрч байна...' : 'Нэвтрэх'}
+          {isLoading ? 'Нэвтрэж байна...' : 'Нэвтрэх'}
         </button>
-        
+
         <p className="register-text">
           Бүртгэл байхгүй юу? <Link to="/register">Бүртгүүлэх</Link>
         </p>

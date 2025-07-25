@@ -7,78 +7,12 @@
   color: #ffffff;
 }
 
-/* Sidebar Styles */
-.sidebar {
-  width: 250px;
-  background-color: #2563eb;
-  display: flex;
-  flex-direction: column;
-  padding: 20px 0;
-}
-
-.logo {
-  padding: 0 20px 30px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 20px;
-}
-
-.logo-icon {
-  font-size: 24px;
-  background-color: rgba(255, 255, 255, 0.1);
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-}
-
-.nav-menu {
-  flex: 1;
-  padding: 0 10px;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  padding: 12px 15px;
-  margin: 4px 0;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.nav-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.nav-item.active {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-left: 3px solid #ffffff;
-}
-
-.nav-icon {
-  margin-right: 12px;
-  font-size: 16px;
-  width: 20px;
-}
-
-.nav-text {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.settings {
-  padding: 0 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 20px;
-}
-
 /* Main Content Styles */
 .main-content {
   flex: 1;
   background-color: #f8fafc;
   color: #1f2937;
+  margin-left: 250px; /* Account for fixed sidebar */
 }
 
 .header {
@@ -242,47 +176,13 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .sidebar {
-    width: 200px;
-  }
-  
-  .nav-text {
-    font-size: 12px;
-  }
-  
-  .content-area {
-    grid-template-columns: 1fr;
-    padding: 20px;
-    gap: 20px;
-  }
-  
-  .header {
-    padding: 15px 20px;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-  
-  .progress-section {
-    gap: 15px;
+  .main-content {
+    margin-left: 200px;
   }
 }
 
-@media (max-width: 480px) {
-  .sidebar {
-    width: 60px;
-  }
-  
-  .nav-text {
-    display: none;
-  }
-  
-  .nav-icon {
-    margin-right: 0;
-  }
-  
-  .logo-icon {
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
+@media (max-width: 640px) {
+  .main-content {
+    margin-left: 60px;
   }
 }

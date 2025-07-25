@@ -45,7 +45,7 @@ function OTPVerification() {
       console.log('✅ OTP Verification Successful:', response.data);
 
       // Handle the response (e.g., navigate or show success)
-      navigate('/home');
+      navigate('/login');
     } catch (err) {
       console.error('❌ OTP Verification Failed:', err);
       setError('OTP Verification failed. Please check the code and try again.');

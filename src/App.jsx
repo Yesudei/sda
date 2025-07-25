@@ -1,27 +1,43 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Login from "./components/Login"; 
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
+
+import Login from "./components/Login";
 import Register from "./components/Register";
 import OTPVerification from "./components/OTPVerification";
 import Home from "./components/Home";
-import StudentPortal from "./components/StudentPortal"; // Import the StudentPortal component
-// import PrivateRoute from "./components/PrivateRoute"; // Uncomment if you want to protect routes
+
+import StudentPortal from "./components/StudentPortal";
+import LessonFree from "./components/LessonFree";
+
+import Sidebar from "./components/Sidebar";
+
+const LayoutWithSidebar = () => (
+  <div style={{ display: "flex" }}>
+    <Sidebar />
+    <div style={{ flex: 1 }}>
+      <Outlet />
+    </div>
+  </div>
+);
 
 function App() {
   return (
     <Routes>
-      {/* Public routes */}
+      {/* Public routes without sidebar */}
+      <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/otp-verification" element={<OTPVerification />} />
-      
-      {/* Student Portal route - accessible after login */}
-      <Route path="/student-portal" element={<StudentPortal />} />
-      
-      {/* If you want to protect the StudentPortal route, uncomment below and comment the line above */}
-      {/* <Route path="/student-portal" element={<PrivateRoute><StudentPortal /></PrivateRoute>} /> */}
+
+      {/* Routes with sidebar */}
+      <Route element={<LayoutWithSidebar />}>
+        <Route path="/student-portal" element={<StudentPortal />} />
+        <Route path="/lessons" element={<LessonFree />} />
+      </Route>
+
+      {/* Redirect unknown routes */}
+      <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>
   );
 }

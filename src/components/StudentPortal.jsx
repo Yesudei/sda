@@ -1,49 +1,9 @@
 import React from 'react';
-import "../css/StudentPortal.css";
+import '../css/StudentPortal.css';
 
 const StudentPortal = () => {
   return (
     <div className="student-portal">
-      <div className="sidebar">
-        <div className="logo">
-          <div className="logo-icon">📚</div>
-        </div>
-        
-        <nav className="nav-menu">
-          <div className="nav-item active">
-            <span className="nav-icon">📊</span>
-            <span className="nav-text">Дашборд</span>
-          </div>
-          <div className="nav-item">
-            <span className="nav-icon">📝</span>
-            <span className="nav-text">Хичээл</span>
-          </div>
-          <div className="nav-item">
-            <span className="nav-icon">📋</span>
-            <span className="nav-text">Даsgал</span>
-          </div>
-          <div className="nav-item">
-            <span className="nav-icon">➕</span>
-            <span className="nav-text">Төгслөм</span>
-          </div>
-          <div className="nav-item">
-            <span className="nav-icon">📄</span>
-            <span className="nav-text">Төлбөр</span>
-          </div>
-          <div className="nav-item">
-            <span className="nav-icon">🏠</span>
-            <span className="nav-text">Гарах</span>
-          </div>
-        </nav>
-        
-        <div className="settings">
-          <div className="nav-item">
-            <span className="nav-icon">⚙️</span>
-            <span className="nav-text">Тохиргоо</span>
-          </div>
-        </div>
-      </div>
-      
       <div className="main-content">
         <header className="header">
           <div className="user-info">
@@ -122,3 +82,4 @@ const StudentPortal = () => {
 };
 
 export default StudentPortal;
+//sda
