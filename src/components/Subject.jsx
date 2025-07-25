@@ -16,7 +16,7 @@ function Subject() {
           </h3>
           <div className="sub-header-card">
             <div id="subCard">3 хичээл</div>
-            <div id="subCard">30 багш</div>
+            <div id="subCard">45 багш</div>
             <div id="subCard">1500 сурагч</div>
             <div></div>
           </div>
