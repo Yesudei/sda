@@ -1,8 +1,8 @@
 import React from 'react'
-
+import AdminLayout from '../AdComponents/AdminLayout'
 function AdContent() {
   return (
-    <div>AdContent</div>
+    <AdminLayout></AdminLayout>
   )
 }
 

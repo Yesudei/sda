@@ -1,9 +1,13 @@
-import React from 'react'
+import React from 'react';
+import AdminLayout from '../AdComponents/AdminLayout';
+import AdDashboard from './AdDashboard';
 
 function AdminPanel() {
   return (
-    <div>AdminPanels</div>
-  )
+    <AdminLayout>
+      <AdDashboard />
+    </AdminLayout>
+  );
 }
 
-export default AdminPanel
+export default AdminPanel;
