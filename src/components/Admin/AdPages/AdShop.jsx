@@ -1,9 +1,8 @@
-import React from 'react'
-
+import React from "react";
+import AdminLayout from "../AdComponents/AdminLayout";
+import AdDashboard from "./AdDashboard";
 function AdShop() {
-  return (
-    <div>AdShop</div>
-  )
+  return <AdminLayout></AdminLayout>;
 }
 
-export default AdShop
+export default AdShop;

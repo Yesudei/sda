@@ -10,7 +10,14 @@ import Shop from "./components/Shop";
 import StudentPortal from "./components/StudentPortal";
 import LessonFree from "./components/LessonFree";
 import Assignments from "./components/Assignments";
-
+import AdminLogin from "./components/Admin/AdPages/AdminLogin";
+import AdminPanel from "./components/Admin/AdPages/AdminPanel";
+import AdDashboard from "./components/Admin/AdPages/AdDashboard";
+import AdminLayout from "./components/Admin/AdComponents/AdminLayout";
+import AdShop from "./components/Admin/AdPages/AdShop";
+import AdTeachers from "./components/Admin/AdPages/AdTeachers";
+import AdContent from "./components/Admin/AdPages/AdContent";
+import AdAddUser from "./components/Admin/AdPages/AdAddUser";
 import Sidebar from "./components/Sidebar";
 
 import RequireAuth from "./RequireAuth";
@@ -52,6 +59,14 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/otp-verification" element={<OTPVerification />} />
 
+      <Route path="/admin-login" element={<AdminLogin />} />
+      <Route path="/admin-panel" element={<AdminPanel />} />
+      <Route path="/admin-dashboard" element={<AdDashboard />} />
+      <Route path="/admin-AddUser" element={<AdAddUser />} />
+      <Route path="/admin-layout" element={<AdminLayout />} />
+      <Route path="/admin-shop" element={<AdShop />} />
+      <Route path="/admin-teacher" element={<AdTeachers />} />
+      <Route path="/admin-content" element={<AdContent />} />
       {/* Protected routes */}
       <Route
         element={
