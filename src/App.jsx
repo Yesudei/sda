@@ -12,21 +12,10 @@ import LessonFree from "./components/LessonFree";
 import Assignments from "./components/Assignments";
 
 import Sidebar from "./components/Sidebar";
-<<<<<<< HEAD
 
 import RequireAuth from "./RequireAuth";
 import { useAxiosInterceptor } from "./axiosInterceptor";
 
-=======
-// import AdminLogin from "./components/Admin/AdPages/AdminLogin";
-// import AdminPanel from "./components/Admin/AdPages/AdminPanel";
-// import AdDashboard from "./components/Admin/AdPages/AdDashboard";
-// import AdminLayout from "./components/Admin/AdComponents/AdminLayout";
-// import AdShop from "./components/Admin/AdPages/AdShop";
-// import AdTeachers from "./components/Admin/AdPages/AdTeachers";
-// import AdContent from "./components/Admin/AdPages/AdContent";
-// import AdAddUser from "./components/Admin/AdPages/AdAddUser";
->>>>>>> f37de24ea6cfecdd5340e5dbb8cf6f7c5e0b284d
 const LayoutWithSidebar = () => (
   <div style={{ display: "flex" }}>
     <Sidebar />
@@ -57,21 +46,11 @@ function App() {
     <Routes>
       {/* Public routes */}
       <Route path="/" element={<Home />} />
-
       <Route path="/login" element={<Login />} />
       <Route path="/shop" element={<Shop />} />
       <Route path="/subject" element={<Subject />} />
       <Route path="/register" element={<Register />} />
       <Route path="/otp-verification" element={<OTPVerification />} />
-      
-      {/* <Route path="/admin-login" element={<AdminLogin />} />
-      <Route path="/admin-panel" element={<AdminPanel />} />
-      <Route path="/admin-dashboard" element={<AdDashboard />} />
-      <Route path="/admin-AddUser" element={<AdAddUser />} />
-      <Route path="/admin-layout" element={<AdminLayout />} />
-      <Route path="/admin-shop" element={<AdShop />} />
-      <Route path="/admin-teacher" element={<AdTeachers />} />
-      <Route path="/admin-content" element={<AdContent />} /> */}
 
       {/* Protected routes */}
       <Route
