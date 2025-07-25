@@ -5,6 +5,8 @@ import Register from "./components/Register";
 import OTPVerification from "./components/OTPVerification";
 import Home from "./components/Home";
 import StudentPortal from "./components/StudentPortal"; // Import the StudentPortal component
+import Shop from "./components/Shop";
+import Subject from "./components/Subject";
 // import PrivateRoute from "./components/PrivateRoute"; // Uncomment if you want to protect routes
 
 function App() {
@@ -12,6 +14,8 @@ function App() {
     <Routes>
       {/* Public routes */}
       <Route path="/home" element={<Home />} />
+      <Route path="/shop" element={<Shop />} />
+      <Route path="/subject" element={<Subject />} />
       <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
