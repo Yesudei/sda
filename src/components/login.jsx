@@ -18,6 +18,7 @@ function Login() {
     setIsLoading(true);
     
     try {
+<<<<<<< Updated upstream
       // Login request
       const res = await axiosInstance.post('/user/login', {
         phoneNumber: phoneNumber.trim(),
@@ -41,6 +42,12 @@ function Login() {
       // Navigate to StudentPortal after successful login
       navigate('/student-portal');
       
+=======
+      const res = await axiosInstance.post('/user/login', { phoneNumber, password });
+      const { token, user } = res.data;
+      login(user, token);
+      navigate('/home');
+>>>>>>> Stashed changes
     } catch (err) {
       console.error('Login error:', err.response || err);
       setError(err.response?.data?.message || 'Нэвтрэхэд алдаа гарлаа');
