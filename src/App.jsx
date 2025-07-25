@@ -5,7 +5,8 @@ import Login from "./components/Login";
 import Register from "./components/register";
 import OTPVerification from "./components/OTPVerification";
 import Home from "./components/Home";
-
+import Subject from "./components/Subject"
+import Shop from "./components/Shop"
 import StudentPortal from "./components/StudentPortal";
 import LessonFree from "./components/LessonFree";
 import Assignments from "./components/Assignments";
@@ -45,8 +46,10 @@ function App() {
     <Routes>
       {/* Public routes */}
       <Route path="/" element={<Home />} />
-      <Route path="/home" element={<Home />} />
+
       <Route path="/login" element={<Login />} />
+      <Route path="/shop" element={<Shop />} />
+      <Route path="/subject" element={<Subject />} />
       <Route path="/register" element={<Register />} />
       <Route path="/otp-verification" element={<OTPVerification />} />
 
@@ -64,7 +67,7 @@ function App() {
       </Route>
 
       {/* Redirect unknown routes */}
-      <Route path="*" element={<Navigate to="/home" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

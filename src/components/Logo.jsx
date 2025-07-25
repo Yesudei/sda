@@ -51,56 +51,23 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
-      <button className="back-button" onClick={() => navigate(-1)}>
-        <FaArrowLeft />
-      </button>
-
-      <div className="login-box">
-        <h2>Нэвтрэх</h2>
-        <p className="subtitle">Өөрийн бүртгэлээр нэвтэрнэ үү</p>
-
-        <input
-          type="text"
-          name="phoneNumber"
-          placeholder="Утасны дугаар"
-          className="input"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-          onKeyPress={handleKeyPress}
-          disabled={isLoading}
-        />
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Нууц"
-          className="input"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onKeyPress={handleKeyPress}
-          disabled={isLoading}
-        />
-
-        {error && <div className="error-text">{error}</div>}
-
-        <div className="forgot-password">
-          <a href="#">Нууц үг мартсан?</a>
-        </div>
-
-        <button
-          className="login-btn"
-          onClick={handleLogin}
-          disabled={isLoading || !phoneNumber.trim() || !password.trim()}
-        >
-          {isLoading ? 'Нэвтрэж байна...' : 'Нэвтрэх'}
-        </button>
-
-        <p className="register-text">
-          Бүртгэл байхгүй юу? <Link to="/register">Бүртгүүлэх</Link>
-        </p>
-      </div>
-    </div>
+    <button
+      className="logoo"
+      onClick={() => navigate('/')}
+      style={{
+        background: 'none',
+        border: 'none',
+        padding: 0,
+        cursor: 'pointer',
+        fontSize: 'inherit',
+        fontFamily: 'inherit',
+        textDecoration: 'none',
+        color: 'inherit',
+      }}
+      aria-label="Go to Home"
+    >
+      e-Drum
+    </button>
   );
 }
 
