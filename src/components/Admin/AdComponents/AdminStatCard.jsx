@@ -1,6 +1,5 @@
 import React from 'react';
-import './AdminStatCard.css';
-
+import "../AdminCss/AdminStatCard.css"
 const AdminStatCard = ({ title, value, growth }) => {
   return (
     <div className="stat-card">
