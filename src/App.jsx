@@ -2,13 +2,18 @@ import React, { useEffect } from "react";
 import { Routes, Route, Navigate, Outlet, useLocation } from "react-router-dom";
 
 import Login from "./components/Login";
-import Register from "./components/Register";
+import Register from "./components/register";
 import OTPVerification from "./components/OTPVerification";
 import Home from "./components/Home";
 
 import StudentPortal from "./components/StudentPortal";
 import LessonFree from "./components/LessonFree";
+import Assignments from "./components/Assignments";
+
 import Sidebar from "./components/Sidebar";
+
+import RequireAuth from "./RequireAuth";
+import { useAxiosInterceptor } from "./axiosInterceptor";
 
 const LayoutWithSidebar = () => (
   <div style={{ display: "flex" }}>
@@ -21,6 +26,8 @@ const LayoutWithSidebar = () => (
 
 function App() {
   const location = useLocation();
+
+  useAxiosInterceptor();
 
   useEffect(() => {
     if (
@@ -36,17 +43,24 @@ function App() {
 
   return (
     <Routes>
-      {/* Public routes without sidebar */}
+      {/* Public routes */}
       <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/otp-verification" element={<OTPVerification />} />
 
-      {/* Routes with sidebar */}
-      <Route element={<LayoutWithSidebar />}>
+      {/* Protected routes */}
+      <Route
+        element={
+          <RequireAuth>
+            <LayoutWithSidebar />
+          </RequireAuth>
+        }
+      >
         <Route path="/student-portal" element={<StudentPortal />} />
         <Route path="/lessons" element={<LessonFree />} />
+        <Route path="/assignments" element={<Assignments />} />
       </Route>
 
       {/* Redirect unknown routes */}

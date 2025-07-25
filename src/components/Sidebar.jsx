@@ -1,76 +1,40 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../css/Sidebar.css';
+import { UserContext } from '../UserContext';
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { logout } = useContext(UserContext);
 
   const menuItems = [
-    {
-      id: 'dashboard',
-      icon: '📊',
-      text: 'Дашборд',
-      path: '/student-portal'
-    },
-    {
-      id: 'lessons',
-      icon: '📝',
-      text: 'Хичээл',
-      path: '/lessons'
-    },
-    {
-      id: 'assignments',
-      icon: '📋',
-      text: 'Даsгал',
-      path: '/assignments'
-    },
-    {
-      id: 'completion',
-      icon: '➕',
-      text: 'Тоглоом',
-      path: '/completion'
-    },
-    {
-      id: 'payment',
-      icon: '📄',
-      text: 'Төлбөр',
-      path: '/payment'
-    },
-    {
-      id: 'home',
-      icon: '🏠',
-      text: 'Гарах',
-      path: '/home'
-    }
+    { id: 'dashboard', icon: '🏠', text: 'Profile', path: '/student-portal' },
+    { id: 'lessons', icon: '📚', text: 'Хичээл', path: '/lessons' },
+    { id: 'assignments', icon: '📋', text: 'Даалгавар', path: '/assignments' },
+    { id: 'completion', icon: '🎯', text: 'Тоглоом', path: '/completion' },
+    { id: 'payment', icon: '🏦', text: 'Төлбөр', path: '/payment' },
+    { id: 'garage', icon: '🏠', text: 'Гарах', path: '/logout' },
   ];
 
   const handleNavigation = (item) => {
-    if (item.id === 'home') {
-      // Handle logout logic here if needed
-      navigate('/home');
-    } else {
-      navigate(item.path);
-    }
+    navigate(item.path);
   };
 
-  const isActive = (path) => {
-    return location.pathname === path;
-  };
+  const isActive = (path) => location.pathname === path;
 
   const handleLogout = () => {
-    // Add logout logic here
-    // Clear user context, tokens, etc.
-    navigate('/login');
+    logout();          // Clear user and tokens from context/localStorage
+    navigate('/login'); // Redirect to login page after logout
   };
 
   return (
     <div className="sidebar">
       <div className="logo">
-        <div className="logo-icon">📚</div>
-        <span className="logo-text">EduPortal</span>
+        <div className="logo-icon">⚡</div>
+        <span className="logo-text">E-Drum</span>
       </div>
-      
+
       <nav className="nav-menu">
         {menuItems.map((item) => (
           <div
@@ -83,15 +47,11 @@ const Sidebar = () => {
           </div>
         ))}
       </nav>
-      
+
       <div className="settings">
         <div className="nav-item" onClick={() => navigate('/settings')}>
           <span className="nav-icon">⚙️</span>
           <span className="nav-text">Тохиргоо</span>
-        </div>
-        <div className="nav-item logout-item" onClick={handleLogout}>
-          <span className="nav-icon">🚪</span>
-          <span className="nav-text">Гарах</span>
         </div>
       </div>
     </div>

@@ -19,31 +19,26 @@ function Login() {
     setIsLoading(true);
 
     try {
-      // Login API call
       const res = await axiosInstance.post('/user/login', {
         phoneNumber: phoneNumber.trim(),
         password: password.trim(),
       });
 
-      console.log('✅ Login response:', res.data);
+      const { accessToken, refreshToken, user } = res.data;
 
-      const accessToken = res.data.accessToken;
-      const user = res.data.user;
-
-      if (!accessToken || !user) {
-        console.log('❌ Missing token or user');
+      if (!accessToken || !refreshToken || !user) {
         setError('Нэвтрэхэд алдаа гарлаа');
+        setIsLoading(false);
         return;
       }
 
-      // Save token and user to context
-      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-      login(user, accessToken);
+      // Save tokens and user
+      login(user, accessToken, refreshToken);
 
-      console.log('➡️ Navigating to /student-portal');
+      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
       navigate('/student-portal');
     } catch (err) {
-      console.error('❌ Login error:', err.response || err);
       setError(err.response?.data?.message || 'Нэвтрэхэд алдаа гарлаа');
     } finally {
       setIsLoading(false);

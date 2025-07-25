@@ -11,8 +11,7 @@ const LessonFree = () => {
       id: 1,
       title: 'Үнэгүй хичээл',
       category: '1 хичээл',
-      instructor: 'Он багшаас',
-      date: 'Өчүү нар хойно 09:05:2023 20:00',
+      instructor: 'Сүүлчийн хуваарь 10/28/2023 20:03',
       thumbnail: '/api/placeholder/240/135',
       duration: '45:30',
       isLive: false
@@ -20,9 +19,8 @@ const LessonFree = () => {
     {
       id: 2,
       title: 'Үнэгүй хичээл',
-      category: '2 хичээл',
-      instructor: 'Он багшаас',
-      date: 'Бүтээл хоёрдугаар 01:06:2023 20:00',
+      category: '12 хичээл',
+      instructor: 'Сүүлчийн хуваарь 10/27/2023 20:03',
       thumbnail: '/api/placeholder/240/135',
       duration: '32:15',
       isLive: false
@@ -30,12 +28,11 @@ const LessonFree = () => {
     {
       id: 3,
       title: 'Үнэгүй хичээл',
-      category: '3 хичээл',
-      instructor: 'Он багшаас',
-      date: 'Бүтээл хоёрдугаар 15:05:2023 20:00',
+      category: '1 хичээл',
+      instructor: 'Сүүлчийн хуваарь 10/26/2023 19:03',
       thumbnail: '/api/placeholder/240/135',
       duration: '28:45',
-      isLive: true
+      isLive: false
     }
   ];
 
@@ -51,20 +48,18 @@ const LessonFree = () => {
 
   return (
     <div className="lesson-free-page">
-      <Sidebar />
-      
       <div className="main-content">
         <div className="content-header">
           <div className="header-top">
             <div className="page-title">
-              <span className="title-icon">📚</span>
-              <span>хичээл</span>
+              <span className="title-icon">🥁</span>
+              <span></span>
             </div>
             <div className="notification-icon">
               <span>🔔</span>
             </div>
           </div>
-          
+         
           <div className="tabs-container">
             {tabs.map(tab => (
               <button
@@ -82,8 +77,8 @@ const LessonFree = () => {
           {activeTab === 'free' && (
             <div className="video-grid">
               {videoLessons.map(video => (
-                <div 
-                  key={video.id} 
+                <div
+                  key={video.id}
                   className="video-card"
                   onClick={() => handleVideoClick(video)}
                 >
@@ -94,15 +89,13 @@ const LessonFree = () => {
                     {video.isLive && (
                       <div className="live-badge">LIVE</div>
                     )}
-                    <div className="video-duration">{video.duration}</div>
                   </div>
-                  
+                 
                   <div className="video-info">
                     <div className="video-category">{video.category}</div>
                     <h3 className="video-title">{video.title}</h3>
                     <div className="video-meta">
                       <p className="video-instructor">{video.instructor}</p>
-                      <p className="video-date">{video.date}</p>
                     </div>
                   </div>
                 </div>
