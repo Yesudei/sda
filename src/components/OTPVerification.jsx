@@ -7,33 +7,50 @@ import '../css/OTPVerification.css';
 function OTPVerification() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Fetch phoneNumber from location state
   const phoneNumber = location.state?.phoneNumber;
 
-  const [otp, setOtp] = useState('');
+  // Validate that phoneNumber is passed properly
+  if (!phoneNumber) {
+    return <div>Error: Phone number not found.</div>;
+  }
+
+  const [otp, setOtp] = useState(''); // Correct state for OTP input
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false); // Loading state to manage button and spinner
   const { login } = useContext(UserContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+    setError('');
+
+    // Validate OTP input (simple check for 6 digits)
+    if (!/^\d{6}$/.test(otp)) {
+      setError('OTP must be a 6-digit number.');
+      setLoading(false);
+      return;
+    }
+
     try {
-      const res = await axiosInstance.post('/user/verify-signup-otp', {
-        phoneNumber,
-        code: otp,
+      // Send OTP verification request
+      const response = await axiosInstance.post('/user/verify-signup-otp', {
+        phoneNumber,   // Ensure the phone number is sent
+        otp,           // OTP sent by the user
+        action: 'verify',  // Action for verification
       });
 
-      console.log('✅ OTP Verified:', res.data);
+      console.log('✅ OTP Verification Successful:', response.data);
 
-      const { token, user } = res.data;
-
-      // Save token and user to context
-      login(user, token);
-
-      // Redirect to protected home route
+      // Handle the response (e.g., navigate or show success)
       navigate('/home');
     } catch (err) {
-      console.error('❌ OTP Verification failed:', err);
-      setError('OTP буруу байна эсвэл хугацаа дууссан байна');
+      console.error('❌ OTP Verification Failed:', err);
+      setError('OTP Verification failed. Please check the code and try again.');
+    } finally {
+      setLoading(false); // Reset loading state after the request
     }
   };
 
@@ -57,8 +74,8 @@ function OTPVerification() {
 
         {error && <p className="error" style={{ color: 'red' }}>{error}</p>}
 
-        <button type="submit" className="verify-btn">
-          Баталгаажуулах
+        <button type="submit" className="verify-btn" disabled={loading}>
+          {loading ? 'Баталгаажуулж байна...' : 'Баталгаажуулах'}
         </button>
       </form>
     </div>
