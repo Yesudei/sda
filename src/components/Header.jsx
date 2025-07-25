@@ -15,10 +15,10 @@ function Header(onScrollToFooter) {
     }
   };
   const handleContactClick = () => {
-    if (location.pathname === "/home") {
+    if (location.pathname === "/") {
       scrollToFooter();
     } else {
-      navigate("/home", { state: { scrollToFooter: true } });
+      navigate("/", { state: { scrollToFooter: true } });
     }
   };
   useEffect(() => {

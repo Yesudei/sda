@@ -7,7 +7,7 @@ export default function Logo() {
   return (
     <button
       className="logoo"
-      onClick={() => navigate('/home')}
+      onClick={() => navigate('/')}
       style={{
         background: 'none',
         border: 'none',
