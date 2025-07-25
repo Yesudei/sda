@@ -19,12 +19,7 @@ function Login() {
     setIsLoading(true);
 
     try {
-<<<<<<< HEAD
       // Login API call
-=======
-<<<<<<< Updated upstream
-      // Login request
->>>>>>> ee8fad2856f1801a3da8302941f5c317d2c3fd38
       const res = await axiosInstance.post('/user/login', {
         phoneNumber: phoneNumber.trim(),
         password: password.trim(),
@@ -47,17 +42,6 @@ function Login() {
 
       console.log('➡️ Navigating to /student-portal');
       navigate('/student-portal');
-<<<<<<< HEAD
-
-=======
-      
-=======
-      const res = await axiosInstance.post('/user/login', { phoneNumber, password });
-      const { token, user } = res.data;
-      login(user, token);
-      navigate('/home');
->>>>>>> Stashed changes
->>>>>>> ee8fad2856f1801a3da8302941f5c317d2c3fd38
     } catch (err) {
       console.error('❌ Login error:', err.response || err);
       setError(err.response?.data?.message || 'Нэвтрэхэд алдаа гарлаа');
@@ -96,7 +80,7 @@ function Login() {
         <input
           type="password"
           name="password"
-          placeholder="Нууц үг"
+          placeholder="Нууц"
           className="input"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
