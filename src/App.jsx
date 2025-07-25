@@ -20,11 +20,14 @@ import AdContent from "./components/Admin/AdPages/AdContent";
 import AdAddUser from "./components/Admin/AdPages/AdAddUser";
 import Sidebar from "./components/Sidebar";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 import RequireAuth from "./RequireAuth";
 import { useAxiosInterceptor } from "./axiosInterceptor";
 
 =======
+=======
+>>>>>>> Stashed changes
 import AdminLogin from "./components/Admin/AdPages/AdminLogin";
 import AdminPanel from "./components/Admin/AdPages/AdminPanel";
 import AdDashboard from "./components/Admin/AdPages/AdDashboard";
@@ -33,6 +36,9 @@ import AdShop from "./components/Admin/AdPages/AdShop";
 import AdTeachers from "./components/Admin/AdPages/AdTeachers";
 import AdContent from "./components/Admin/AdPages/AdContent";
 import AdAddUser from "./components/Admin/AdPages/AdAddUser";
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 const LayoutWithSidebar = () => (
   <div style={{ display: "flex" }}>
@@ -79,6 +85,7 @@ function App() {
       <Route path="/admin-teacher" element={<AdTeachers />} />
       <Route path="/admin-content" element={<AdContent />} />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       {/* Protected routes */}
       <Route
         element={
@@ -88,6 +95,8 @@ function App() {
         }
       >
 =======
+=======
+>>>>>>> Stashed changes
 
       {/* Routes with sidebar */}
       <Route element={<LayoutWithSidebar />}>
