@@ -9,6 +9,7 @@
   align-items: center;
   padding: 25px 0;
   border-bottom: 2px solid #dcdcdc;
+  color:red;
 }
 
 .logoo {
@@ -49,7 +50,7 @@
 }
 
 .registerr-btn {
-  background: black;
+  background: red;
   color: white;
   padding: 8px 18px;
   border-radius: 5px;
@@ -64,6 +65,7 @@
   align-items: center;
   margin-top: 60px;
   flex-wrap: wrap;
+  color: grey;
 }
 
 .hero-text {

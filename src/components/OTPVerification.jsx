@@ -17,7 +17,7 @@ function OTPVerification() {
     e.preventDefault();
 
     try {
-      const res = await axiosInstance.post('/otp/verify', {
+      const res = await axiosInstance.post('/user/verify-signup-otp', {
         phoneNumber,
         code: otp,
       });
