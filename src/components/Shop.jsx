@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, ShoppingCart, Home } from 'lucide-react';
 import '../css/Shop.css';
 
 const Shop = () => {
-  const [selectedKit, setSelectedKit] = useState(6); // Kit 6 is selected by default
+  const [selectedKit, setSelectedKit] = useState(6); // Kit 6 selected by default
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Бөмбөр');
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   const drumKits = [
     { id: 1, name: 'Gear4Music Drum Kit', price: '1 000 000' },
@@ -25,6 +28,7 @@ const Shop = () => {
 
   const handleKitSelect = (kitId) => {
     setSelectedKit(kitId);
+    navigate(`/description/${kitId}`);
   };
 
   const handleCategorySelect = (category) => {
@@ -36,40 +40,26 @@ const Shop = () => {
     <div 
       className={`drum-kit-card ${isSelected ? 'selected' : ''}`}
       onClick={() => handleKitSelect(kit.id)}
+      style={{ cursor: 'pointer' }}
     >
       <div className="drum-kit-image">
         <svg viewBox="0 0 120 80" className="drum-svg">
-          {/* Drum kit illustration */}
           <g fill="#2a2a2a" stroke="#1a1a1a" strokeWidth="1">
-            {/* Bass drum */}
             <ellipse cx="60" cy="55" rx="25" ry="20" fill="#e8e8e8" stroke="#ccc" strokeWidth="2"/>
             <ellipse cx="60" cy="52" rx="22" ry="17" fill="#f0f0f0"/>
-            
-            {/* Tom drums */}
             <ellipse cx="35" cy="35" rx="8" ry="6" fill="#e8e8e8" stroke="#ccc" strokeWidth="1"/>
             <ellipse cx="35" cy="32" rx="7" ry="5" fill="#f0f0f0"/>
-            
             <ellipse cx="85" cy="35" rx="8" ry="6" fill="#e8e8e8" stroke="#ccc" strokeWidth="1"/>
             <ellipse cx="85" cy="32" rx="7" ry="5" fill="#f0f0f0"/>
-            
-            {/* Floor tom */}
             <ellipse cx="90" cy="60" rx="12" ry="10" fill="#e8e8e8" stroke="#ccc" strokeWidth="1"/>
             <ellipse cx="90" cy="57" rx="10" ry="8" fill="#f0f0f0"/>
-            
-            {/* Snare */}
             <ellipse cx="45" cy="50" rx="10" ry="8" fill="#e8e8e8" stroke="#ccc" strokeWidth="1"/>
             <ellipse cx="45" cy="47" rx="8" ry="6" fill="#f0f0f0"/>
-            
-            {/* Cymbals */}
             <ellipse cx="25" cy="25" rx="12" ry="2" fill="#ffd700" stroke="#daa520" strokeWidth="1"/>
             <ellipse cx="75" cy="20" rx="15" ry="2" fill="#ffd700" stroke="#daa520" strokeWidth="1"/>
             <ellipse cx="95" cy="25" rx="10" ry="2" fill="#ffd700" stroke="#daa520" strokeWidth="1"/>
-            
-            {/* Hi-hat */}
             <ellipse cx="20" cy="45" rx="8" ry="1.5" fill="#ffd700" stroke="#daa520" strokeWidth="1"/>
             <ellipse cx="20" cy="47" rx="8" ry="1.5" fill="#ffd700" stroke="#daa520" strokeWidth="1"/>
-            
-            {/* Stands and hardware */}
             <line x1="35" y1="41" x2="35" y2="65" stroke="#333" strokeWidth="2"/>
             <line x1="85" y1="41" x2="85" y2="65" stroke="#333" strokeWidth="2"/>
             <line x1="90" y1="70" x2="90" y2="75" stroke="#333" strokeWidth="2"/>
@@ -93,7 +83,7 @@ const Shop = () => {
         {/* Back to Home Button */}
         <button
           className="back-home-button"
-          onClick={() => window.location.href = '/'}
+          onClick={() => navigate('/')}
           aria-label="Back to home"
         >
           <Home size={20} />
@@ -111,7 +101,12 @@ const Shop = () => {
           <Search className="search-icon" size={16} />
         </div>
         
-        <button className="cart-button">
+        {/* Cart button with navigation */}
+        <button
+          className="cart-button"
+          onClick={() => navigate('/cart')}
+          aria-label="Go to cart"
+        >
           <ShoppingCart size={20} />
           <span>Сагс</span>
         </button>

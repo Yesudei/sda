@@ -7,6 +7,8 @@ import OTPVerification from "./components/OTPVerification";
 import Home from "./components/Home";
 import Subject from "./components/Subject";
 import Shop from "./components/Shop";
+import Description from "./components/Description";
+import ShoppingCart from "./components/ShoppingCart";   // <-- added import
 import StudentPortal from "./components/StudentPortal";
 import LessonFree from "./components/LessonFree";
 import Assignments from "./components/Assignments";
@@ -58,6 +60,8 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/shop" element={<Shop />} />
+      <Route path="/cart" element={<ShoppingCart />} /> {/* <-- new cart route */}
+      <Route path="/description/:kitId" element={<Description />} />
       <Route path="/subject" element={<Subject />} />
       <Route path="/register" element={<Register />} />
       <Route path="/otp-verification" element={<OTPVerification />} />

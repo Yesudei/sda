@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import '../css/Login.css';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
-import axiosInstance from '../axiosInstance';
+import axiosInstance, { setAuthToken } from '../axiosInstance';
 import { UserContext } from '../UserContext';
 
 function Login() {
@@ -19,27 +19,48 @@ function Login() {
     setIsLoading(true);
 
     try {
+      console.log('Attempting login with:', {
+        phoneNumber: phoneNumber.trim(),
+        password: password.trim(),
+      });
+
+      // 1. Login and get tokens
       const res = await axiosInstance.post('/user/login', {
         phoneNumber: phoneNumber.trim(),
         password: password.trim(),
       });
 
-      const { accessToken, refreshToken, user } = res.data;
+      console.log('Login response:', res.data);
 
-      if (!accessToken || !refreshToken || !user) {
+      const { accessToken, refreshToken } = res.data;
+
+      if (!accessToken || !refreshToken) {
         setError('Нэвтрэхэд алдаа гарлаа');
         setIsLoading(false);
         return;
       }
 
-      // Save tokens and user
+      // 2. Set token header for subsequent requests
+      setAuthToken(accessToken);
+
+      // 3. Fetch user profile
+      const userRes = await axiosInstance.get('/user/getuser');
+      const user = userRes.data;
+
+      console.log('User profile:', user);
+
+      // 4. Save user and tokens in context and localStorage
       login(user, accessToken, refreshToken);
 
-      axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-
+      // 5. Navigate to protected page
       navigate('/student-portal');
     } catch (err) {
-      setError(err.response?.data?.message || 'Нэвтрэхэд алдаа гарлаа');
+      console.error('Login error:', err);
+
+      setError(
+        err.response?.data?.message ||
+          (err.request ? 'Server did not respond.' : 'Нэвтрэхэд алдаа гарлаа')
+      );
     } finally {
       setIsLoading(false);
     }
