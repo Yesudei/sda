@@ -10,23 +10,21 @@ import Shop from "./components/Shop";
 import StudentPortal from "./components/StudentPortal";
 import LessonFree from "./components/LessonFree";
 import Assignments from "./components/Assignments";
-import AdminLogin from "./components/Admin/AdPages/AdminLogin";
-import AdminPanel from "./components/Admin/AdPages/AdminPanel";
-import AdDashboard from "./components/Admin/AdPages/AdDashboard";
-import AdminLayout from "./components/Admin/AdComponents/AdminLayout";
-import AdShop from "./components/Admin/AdPages/AdShop";
-import AdTeachers from "./components/Admin/AdPages/AdTeachers";
-import AdContent from "./components/Admin/AdPages/AdContent";
-import AdAddUser from "./components/Admin/AdPages/AdAddUser";
-import Sidebar from "./components/Sidebar";
 
+import AdAddUser from "./Admin/Pages/AdAddUser";
+import AdContent from "./Admin/Pages/AdContent";
+import AdDashboard from "./Admin/Pages/AdDashboard";
+import AdLogin from "./Admin/Pages/AdLogin";
+import AdSettings from "./Admin/Pages/AdSettings";
+import AdShop from "./Admin/Pages/AdShop";
+import AdTeachers from "./Admin/Pages/AdTeachers";
+import AdminLayout from "./Admin/Components/AdminLayout";
+import AdFinancial from "./Admin/Pages/AdFinancial";
+
+import Sidebar from "./components/Sidebar";
 
 import RequireAuth from "./RequireAuth";
 import { useAxiosInterceptor } from "./axiosInterceptor";
-
-
-
-
 
 const LayoutWithSidebar = () => (
   <div style={{ display: "flex" }}>
@@ -64,14 +62,17 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/otp-verification" element={<OTPVerification />} />
 
-      <Route path="/admin-login" element={<AdminLogin />} />
-      <Route path="/admin-panel" element={<AdminPanel />} />
-      <Route path="/admin-dashboard" element={<AdDashboard />} />
-      <Route path="/admin-AddUser" element={<AdAddUser />} />
-      <Route path="/admin-layout" element={<AdminLayout />} />
-      <Route path="/admin-shop" element={<AdShop />} />
-      <Route path="/admin-teacher" element={<AdTeachers />} />
-      <Route path="/admin-content" element={<AdContent />} />
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route path="panel" element={<AdDashboard />} />
+        <Route path="settings" element={<AdSettings />} />
+        <Route path="addUser" element={<AdAddUser />} />
+        <Route path="shop" element={<AdShop />} />
+        <Route path="teacher" element={<AdTeachers />} />
+        <Route path="content" element={<AdContent />} />
+        <Route path="financial" element={<AdFinancial />} />
+      </Route>
+
+      <Route path="/admin/login" element={<AdLogin />} />
 
       {/* Protected routes */}
       <Route
@@ -82,11 +83,8 @@ function App() {
         }
       />
 
-
-
       {/* Routes with sidebar */}
       <Route element={<LayoutWithSidebar />}>
-
         <Route path="/student-portal" element={<StudentPortal />} />
         <Route path="/lessons" element={<LessonFree />} />
         <Route path="/assignments" element={<Assignments />} />

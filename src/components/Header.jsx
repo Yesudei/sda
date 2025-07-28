@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
+
 // import "../css/Header.css";
 function Header(onScrollToFooter) {
   const navigate = useNavigate();
@@ -53,34 +54,50 @@ function Header(onScrollToFooter) {
   }, [lastScrollY]);
 
   return (
-    <header
-      className={`navbar ${showHeader ? "header--visible" : "header--hidden"}`}
-    >
-      <div className="logoo">
-        <Logo />
-      </div>
-      <nav className="nav-buttons">
-        <button className="nav-btn" onClick={() => navigate("/subject")}>
-          Хичээлүүд
-        </button>
-        <button className="nav-btn" onClick={() => navigate("/shop")}>
-          Дэлгүүр
-        </button>
-        <button className="nav-btn">Үнэ</button>
-        <button className="nav-btn" onClick={handleContactClick}>
-          Холбоо барих
-        </button>
-      </nav>
+    <>
+      <header
+        className={`navbar ${
+          showHeader ? "header--visible" : "header--hidden"
+        }`}
+      >
+        <div className="logoo">
+          <Logo />
+        </div>
+        <nav className="nav-buttons">
+          <button className="nav-btn" onClick={() => navigate("/subject")}>
+            Хичээлүүд
+          </button>
+          <button className="nav-btn" onClick={() => navigate("/shop")}>
+            Дэлгүүр
+          </button>
+          <button className="nav-btn">Үнэ</button>
+          <button className="nav-btn" onClick={handleContactClick}>
+            Холбоо барих
+          </button>
+        </nav>
 
-      <div className="auth-buttons">
-        <button className="loginn-btn" onClick={() => navigate("/login")}>
-          Нэвтрэх
-        </button>
-        <button className="registerr-btn" onClick={() => navigate("/register")}>
-          Бүртгүүлэх
-        </button>
-      </div>
-    </header>
+        <div className="auth-buttons">
+          <button className="loginn-btn" onClick={() => navigate("/login")}>
+            Нэвтрэх
+          </button>
+          <button
+            className="registerr-btn"
+            onClick={() => navigate("/register")}
+          >
+            Бүртгүүлэх
+          </button>
+        </div>
+      </header>
+      {showHeader && (
+        <div className="drum-hang-wrapper">
+  <div className="drum-line"></div>
+  <div className="drum-icon-wrapper">
+    <img src="/images/headIcon.png" alt="Drum" className="drum-icon" />
+  </div>
+</div>
+
+      )}
+    </>
   );
 }
 

@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import "../../../css/Login.css" 
+import React, { useState, useContext } from 'react';
+import "../../css/Login.css"
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
-import axiosInstance from '../../../axiosInstance';
+import { FaArrowLeft } from 'react-icons/fa'; 
+import { UserContext } from '../../UserContext';
+import axiosInstance from '../../axiosInstance';
 
-function AdminLogin() {
+function AdLogin() {
   const navigate = useNavigate();
+  const { login } = useContext(UserContext);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -22,23 +24,18 @@ function AdminLogin() {
         password: password.trim(),
       });
 
-      console.log('✅ Admin Login response:', res.data);
+      const { accessToken, refreshToken, admin } = res.data;
 
-      const accessToken = res.data.accessToken;
-      const admin = res.data.admin;
-
-      if (!accessToken || !admin) {
-        setError('Нэвтрэхэд алдаа гарлаа');
+      if (!accessToken || !refreshToken || !admin) {
+        setError('Админ нэвтрэхэд алдаа гарлаа');
+        setIsLoading(false);
         return;
       }
 
+      login(admin, accessToken, refreshToken);
       axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-      localStorage.setItem('adminToken', accessToken);
-      localStorage.setItem('adminUser', JSON.stringify(admin));
-
-      navigate('/admin-panel');
+      navigate('/admin/dashboard');
     } catch (err) {
-      console.error('❌ Admin Login error:', err.response || err);
       setError(err.response?.data?.message || 'Нэвтрэхэд алдаа гарлаа');
     } finally {
       setIsLoading(false);
@@ -50,18 +47,18 @@ function AdminLogin() {
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container admin-login-container">
       <button className="back-button" onClick={() => navigate(-1)}>
         <FaArrowLeft />
       </button>
 
       <div className="login-box">
-        <h2>Админ Нэвтрэх</h2>
-        <p className="subtitle">Зөвхөн админ хэрэглэгч</p>
+        <h2>Админ нэвтрэх</h2>
+        <p className="subtitle">Админ эрхээр нэвтэрнэ үү</p>
 
         <input
           type="text"
-          placeholder="Нэвтрэх нэр"
+          placeholder="Хэрэглэгчийн нэр"
           className="input"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -71,7 +68,7 @@ function AdminLogin() {
 
         <input
           type="password"
-          placeholder="Нууц"
+          placeholder="Нууц үг"
           className="input"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -93,4 +90,4 @@ function AdminLogin() {
   );
 }
 
-export default AdminLogin;
+export default AdLogin;

@@ -47,7 +47,7 @@ function Home() {
           <div></div>{" "}
           <div className="feature-grid">
             <div className="feature-card">
-              <img src="/images/placeholder.png" alt="icon" />
+              <img src="/images/headIcon.png" alt="icon" />
               <h3>Видео хичээлүүд</h3>
               <p>
                 Өндөр чанартай видео хичээлүүдээр тодорхой заавар авч, дахин
@@ -56,7 +56,7 @@ function Home() {
             </div>
 
             <div className="feature-card">
-              <img src="/images/placeholder.png" alt="icon" />
+              <img src="/images/headIcon.png" alt="icon" />
               <h3>Мэргэжлийн багш нар</h3>
               <p>
                 Олон жилийн туршлагатай, мэргэжсэн багш нарын удирдлага дор
@@ -65,7 +65,7 @@ function Home() {
             </div>
 
             <div className="feature-card">
-              <img src="/images/placeholder.png" alt="icon" />
+              <img src="/images/headIcon.png" alt="icon" />
               <h3>Ахиц хянах систем</h3>
               <p>
                 Өөрийн сурсан хичээл, оноо, шагналыг хянаж, дэвшлээ харах
@@ -74,7 +74,7 @@ function Home() {
             </div>
 
             <div className="feature-card">
-              <img src="/images/placeholder.png" alt="icon" />
+              <img src="/images/headIcon.png" alt="icon" />
               <h3>Уян хатан цаг</h3>
               <p>
                 24/7 хүссэн цагааар хичээллэж, өөрийн хуваарьт тохируулан
@@ -83,7 +83,7 @@ function Home() {
             </div>
 
             <div className="feature-card">
-              <img src="/images/placeholder.png" alt="icon" />
+              <img src="/images/headIcon.png" alt="icon" />
               <h3>Багш-сурагч харилцаа</h3>
               <p>
                 Асуулт асуух, зөвлөгөө авах, туршлага хуваалцах боломжтой
@@ -92,7 +92,7 @@ function Home() {
             </div>
 
             <div className="feature-card">
-              <img src="/images/placeholder.png" alt="icon" />
+              <img src="/images/headIcon.png" alt="icon" />
               <h3>Нарийвчилсан статистик</h3>
               <p>
                 Өөрийн сурах процесс, цаг зарцуулалт, дэвшлийг дэлгэрэнгүй харах

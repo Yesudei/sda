@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import "../AdminCss/AdminSidebar.css";
-
+import "../Css/Admin.css";
 const AdminSidebar = () => {
   return (
     <div className="admin-sidebar">
@@ -13,57 +12,77 @@ const AdminSidebar = () => {
         <ul>
           <li>
             <NavLink
-              to="/admin-panel"
+              to="/admin/panel"
               className={({ isActive }) =>
                 `sidebar-link ${isActive ? "active-link" : ""}`
               }
             >
-              🏠 Dashboard
+              🏠 Дашбоард
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/admin-teacher"
+              to="/admin/teacher"
               className={({ isActive }) =>
                 `sidebar-link ${isActive ? "active-link" : ""}`
               }
             >
-              👩‍🏫 Teachers
+              👩‍🏫 Багш
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/admin-content"
+              to="/admin/content"
               className={({ isActive }) =>
                 `sidebar-link ${isActive ? "active-link" : ""}`
               }
             >
-              📚 Content
+              📚 Контент
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/admin-shop"
+              to="/admin/shop"
               className={({ isActive }) =>
                 `sidebar-link ${isActive ? "active-link" : ""}`
               }
             >
-              🛒 Shop
+              🛒 Дэлгүүр
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/admin-AddUser"
+              to="/admin/financial"
               className={({ isActive }) =>
                 `sidebar-link ${isActive ? "active-link" : ""}`
               }
             >
-              ➕ Add User
+              🛒 Санхүү
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/admin-login"
+              to="/admin/adduser"
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active-link" : ""}`
+              }
+            >
+              ➕ Хэрэглэгч нэмэх
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/admin/settings"
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active-link" : ""}`
+              }
+            >
+              ⚙️ Тохиргоо
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/admin/login"
               className={({ isActive }) =>
                 `sidebar-link logout-link ${isActive ? "active-link" : ""}`
               }

@@ -9,13 +9,13 @@ html, body {
 
 /* Home page: scrollable layout */
 body.home-page {
-  overflow-y: auto;
+  overflow-y: auto ;
   background-color: white;
 }
 
 /* Login/Register/OTP pages: centered fixed layout */
 body.login-page {
-  overflow: hidden;
+  overflow: hidden ;
   background-color: #33213c;
   display: flex;
   justify-content: center;
@@ -51,12 +51,12 @@ a:hover {
 
 /* Ensure the body is a flex container that fills the screen */
 body {
-  display: flex;
-  justify-content: center; /* Horizontally centers #root within body */
-  align-items: center;     /* Vertically centers #root within body */
-  min-width: 320px;        /* Minimum width for responsive layout */
-  min-height: 100vh;       /* Use 100vh for body to guarantee full viewport height */
-  background-color: #242424; /* Fallback background for body if #root doesn't cover */
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #242424;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* General heading styles */
