@@ -107,7 +107,7 @@ function Login() {
         {error && <div className="error-text">{error}</div>}
 
         <div className="forgot-password">
-          <a href="#">Нууц үг мартсан?</a>
+          <Link to="/forgot-password">Нууц үг мартсан?</Link>
         </div>
 
         <button

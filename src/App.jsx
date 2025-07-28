@@ -8,10 +8,11 @@ import Home from "./components/Home";
 import Subject from "./components/Subject";
 import Shop from "./components/Shop";
 import Description from "./components/Description";
-import ShoppingCart from "./components/ShoppingCart";   // <-- added import
+import ShoppingCart from "./components/ShoppingCart";
 import StudentPortal from "./components/StudentPortal";
 import LessonFree from "./components/LessonFree";
 import Assignments from "./components/Assignments";
+import ForgotPassword from "./components/ForgotPassword"; // ✅ make sure this is correctly imported
 
 import AdAddUser from "./Admin/Pages/AdAddUser";
 import AdContent from "./Admin/Pages/AdContent";
@@ -65,13 +66,15 @@ function App() {
       {/* Public routes */}
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} /> {/* ✅ Added this line */}
+      <Route path="/otp-verification" element={<OTPVerification />} />
       <Route path="/shop" element={<Shop />} />
-      <Route path="/cart" element={<ShoppingCart />} /> {/* <-- new cart route */}
+      <Route path="/cart" element={<ShoppingCart />} />
       <Route path="/description/:kitId" element={<Description />} />
       <Route path="/subject" element={<Subject />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/otp-verification" element={<OTPVerification />} />
 
+      {/* Admin routes */}
       <Route path="/admin" element={<AdminLayout />}>
         <Route path="panel" element={<AdDashboard />} />
         <Route path="settings" element={<AdSettings />} />
@@ -81,7 +84,9 @@ function App() {
         <Route path="content" element={<AdContent />} />
         <Route path="financial" element={<AdFinancial />} />
       </Route>
+      <Route path="/admin/login" element={<AdLogin />} />
 
+      {/* Teacher routes */}
       <Route path="/teacher" element={<TeachLayout />}>
         <Route path="panel" element={<TeachDashboard />} />
         <Route path="content" element={<TeachContent />} />
@@ -89,9 +94,7 @@ function App() {
         <Route path="settings" element={<TeachSettings />} />
       </Route>
 
-      <Route path="/admin/login" element={<AdLogin />} />
-
-      {/* Protected routes */}
+      {/* Protected routes with sidebar */}
       <Route
         element={
           <RequireAuth>
@@ -100,7 +103,6 @@ function App() {
         }
       />
 
-      {/* Routes with sidebar */}
       <Route element={<LayoutWithSidebar />}>
         <Route path="/student-portal" element={<StudentPortal />} />
         <Route path="/lessons" element={<LessonFree />} />
