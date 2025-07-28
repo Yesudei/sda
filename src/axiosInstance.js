@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
   },
 });
 
-// Helper to set the token header dynamically
+// Helper to set or remove the Authorization header dynamically
 export const setAuthToken = (token) => {
   if (token) {
     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
