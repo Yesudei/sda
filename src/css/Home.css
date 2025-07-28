@@ -41,9 +41,11 @@
   color: #666;
   margin: 0 15px;
   cursor: pointer;
+  /* margin: 30px; */
 }
 .nav-buttons {
   margin-right: -130px;
+  
 }
 .nav-btn:hover {
   color: #000000;
@@ -89,9 +91,9 @@
   font-weight: bold;
   cursor: pointer;
 }
-.drum-icon-wrapper {
+/* .drum-icon-wrapper {
   position: fixed;
-  top: 80px;
+  top: 0px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 998;
@@ -99,7 +101,7 @@
 }
 
 .drum-icon {
-  width: 80px;
+  width: 60px;
   height: auto;
 }
 
@@ -119,7 +121,7 @@
   100% {
     transform: translateX(-50%) rotate(0deg);
   }
-}
+} */
 
 .hero {
   display: flex;

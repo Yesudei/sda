@@ -1,0 +1,80 @@
+.teach-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #1f2937;
+  color: white;
+  padding-left: 20px;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+.sidebar-header h2 {
+  font-size: 22px;
+  margin-bottom: 25px;
+  color: white;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 12px 15px;
+  color: #ccc;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 6px;
+  transition: all 0.5s ease;
+}
+
+.sidebar-link:hover {
+  background-color: #272654;
+  color: white;
+}
+
+.active-link {
+  background-color: #272654;
+  color: white;
+  font-weight: 600;
+}
+
+.logout-link {
+  margin-top: 20px;
+  color: rgb(254, 116, 129);
+}
+.student-section {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.content-table {
+  flex: 2;
+}
+
+.appointment-box {
+  flex: 1;
+  padding: 16px;
+  background: #f4f4f4;
+  border-radius: 8px;
+  min-width: 250px;
+}
+.dashboard-activity {
+  border: 1px solid rgb(178, 178, 178);
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 20px;
+}
+.dashboard-courses {
+  border: 1px solid rgb(184, 184, 184);
+  border-radius: 20px;
+  padding: 20px;
+}

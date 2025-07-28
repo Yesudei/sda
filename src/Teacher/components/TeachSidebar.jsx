@@ -1,23 +1,24 @@
-import React,{useContext} from "react";
+// src/Teacher/Components/TeachSidebar.jsx
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import "../Css/Admin.css";
+import "../css/Teacher.css"
 import { UserContext } from "../../UserContext";
-const AdminSidebar = () => {
+
+const TeachSidebar = () => {
   const { user } = useContext(UserContext);
-  const adminName = user ? `${user.firstName} ${user.lastName}` : "Admin Panel";
-// console.log("AdminSidebar user:", user);
+  const teacherName = user ? `${user.firstName} ${user.lastName}` : "Teacher Panel";
 
   return (
-    <div className="admin-sidebar">
+    <div className="teach-sidebar">
       <div className="sidebar-header">
-        <h2>{adminName}</h2>
+        <h2>{teacherName}</h2>
       </div>
 
       <nav className="sidebar-nav">
         <ul>
           <li>
             <NavLink
-              to="/admin/panel"
+              to="/teacher/panel"
               className={({ isActive }) =>
                 `sidebar-link ${isActive ? "active-link" : ""}`
               }
@@ -27,17 +28,7 @@ const AdminSidebar = () => {
           </li>
           <li>
             <NavLink
-              to="/admin/teacher"
-              className={({ isActive }) =>
-                `sidebar-link ${isActive ? "active-link" : ""}`
-              }
-            >
-              👩‍🏫 Багш
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/admin/content"
+              to="/teacher/content"
               className={({ isActive }) =>
                 `sidebar-link ${isActive ? "active-link" : ""}`
               }
@@ -47,37 +38,17 @@ const AdminSidebar = () => {
           </li>
           <li>
             <NavLink
-              to="/admin/shop"
+              to="/teacher/student"
               className={({ isActive }) =>
                 `sidebar-link ${isActive ? "active-link" : ""}`
               }
             >
-              🛒 Дэлгүүр
+              👩‍🎓 Сурагчид
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/admin/financial"
-              className={({ isActive }) =>
-                `sidebar-link ${isActive ? "active-link" : ""}`
-              }
-            >
-              🛒 Санхүү
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/admin/adduser"
-              className={({ isActive }) =>
-                `sidebar-link ${isActive ? "active-link" : ""}`
-              }
-            >
-              ➕ Хэрэглэгч нэмэх
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/admin/settings"
+              to="/teacher/settings"
               className={({ isActive }) =>
                 `sidebar-link ${isActive ? "active-link" : ""}`
               }
@@ -92,7 +63,7 @@ const AdminSidebar = () => {
                 `sidebar-link logout-link ${isActive ? "active-link" : ""}`
               }
             >
-              🚪 Logout
+              🚪 Гарах
             </NavLink>
           </li>
         </ul>
@@ -101,4 +72,4 @@ const AdminSidebar = () => {
   );
 };
 
-export default AdminSidebar;
+export default TeachSidebar;

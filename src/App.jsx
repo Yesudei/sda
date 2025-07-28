@@ -21,6 +21,12 @@ import AdTeachers from "./Admin/Pages/AdTeachers";
 import AdminLayout from "./Admin/Components/AdminLayout";
 import AdFinancial from "./Admin/Pages/AdFinancial";
 
+import TeachLayout from "./Teacher/components/TeachLayout";
+import TeachDashboard from "./Teacher/pages/TeachDashboard";
+import TeachContent from "./Teacher/pages/TeachContent";
+import TeachStudent from "./Teacher/pages/TeachStudents";
+import TeachSettings from "./Teacher/pages/TeachSettings";
+
 import Sidebar from "./components/Sidebar";
 
 import RequireAuth from "./RequireAuth";
@@ -70,6 +76,13 @@ function App() {
         <Route path="teacher" element={<AdTeachers />} />
         <Route path="content" element={<AdContent />} />
         <Route path="financial" element={<AdFinancial />} />
+      </Route>
+
+      <Route path="/teacher" element={<TeachLayout />}>
+        <Route path="panel" element={<TeachDashboard />} />
+        <Route path="content" element={<TeachContent />} />
+        <Route path="student" element={<TeachStudent />} />
+        <Route path="settings" element={<TeachSettings />} />
       </Route>
 
       <Route path="/admin/login" element={<AdLogin />} />

@@ -70,6 +70,7 @@ function Header(onScrollToFooter) {
           <button className="nav-btn" onClick={() => navigate("/shop")}>
             Дэлгүүр
           </button>
+
           <button className="nav-btn">Үнэ</button>
           <button className="nav-btn" onClick={handleContactClick}>
             Холбоо барих
@@ -88,15 +89,6 @@ function Header(onScrollToFooter) {
           </button>
         </div>
       </header>
-      {showHeader && (
-        <div className="drum-hang-wrapper">
-  <div className="drum-line"></div>
-  <div className="drum-icon-wrapper">
-    <img src="/images/headIcon.png" alt="Drum" className="drum-icon" />
-  </div>
-</div>
-
-      )}
     </>
   );
 }
