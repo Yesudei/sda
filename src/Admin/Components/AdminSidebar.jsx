@@ -1,16 +1,18 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "../Css/Admin.css";
 import { UserContext } from "../../UserContext";
 const AdminSidebar = () => {
   const { user } = useContext(UserContext);
-  const adminName = user ? `${user.firstName} ${user.lastName}` : "Admin Panel";
-// console.log("AdminSidebar user:", user);
 
   return (
     <div className="admin-sidebar">
       <div className="sidebar-header">
-        <h2>{adminName}</h2>
+        <h2>
+          {user?.firstName && user?.lastName
+            ? `${user.firstName} ${user.lastName}`
+            : "Админ"}
+        </h2>
       </div>
 
       <nav className="sidebar-nav">

@@ -1,55 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "../../css/Login.css";
-import axiosInstance from '../../axiosInstance';
-import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
+import axiosInstance from "../../axiosInstance";
+import { useNavigate } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 
 function AdAddUser() {
-  const [username, setUsername] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
-  const [role, setRole] = useState('user');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [role, setRole] = useState("user");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleAddUser = async () => {
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
     if (password.trim() !== repeatPassword.trim()) {
-      setError('Нууц үг таарахгүй байна');
+      setError("Нууц үг таарахгүй байна");
       return;
     }
 
     setIsLoading(true);
 
     try {
-      const res = await axiosInstance.post('/admin/create', {
-        username: username.trim(),
-        phone: phone.trim(),
-        password: password.trim(),
-        role,
-      });
+      const token = localStorage.getItem("token");
 
-      setSuccess('Хэрэглэгч амжилттай нэмэгдлээ!');
-      setUsername('');
-      setPhone('');
-      setPassword('');
-      setRepeatPassword('');
-      setRole('user');
+      const res = await axiosInstance.post(
+        "/admin/create",
+        {
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          email: email.trim(),
+          phoneNumber: phoneNumber.trim(),
+          password: password.trim(),
+          role,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setSuccess("Хэрэглэгч амжилттай нэмэгдлээ!");
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPhoneNumber("");
+      setPassword("");
+      setRepeatPassword("");
+      setRole("user");
     } catch (err) {
-      setError(err.response?.data?.message || 'Хэрэглэгч нэмэхэд алдаа гарлаа');
+      console.error("Full error response:", err.response);
+      setError(err.response?.data?.message || "Хэрэглэгч нэмэхэд алдаа гарлаа");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') handleAddUser();
+    if (e.key === "Enter") handleAddUser();
   };
 
   return (
@@ -60,28 +77,44 @@ function AdAddUser() {
 
       <div className="login-box">
         <h2>Шинэ хэрэглэгч нэмэх</h2>
-        <p className="subtitle">Хэрэглэгчийн нэр, утас, нууц үг, эрх</p>
+        <p className="subtitle">Хэрэглэгчийн мэдээлэл оруулна уу</p>
 
         <input
           type="text"
-          placeholder="Хэрэглэгчийн нэр"
+          placeholder="Нэр"
           className="input"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
           onKeyPress={handleKeyPress}
           disabled={isLoading}
         />
-
+        <input
+          type="text"
+          placeholder="Овог"
+          className="input"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          onKeyPress={handleKeyPress}
+          disabled={isLoading}
+        />
+        <input
+          type="email"
+          placeholder="И-мэйл"
+          className="input"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onKeyPress={handleKeyPress}
+          disabled={isLoading}
+        />
         <input
           type="text"
           placeholder="Утасны дугаар"
           className="input"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
           onKeyPress={handleKeyPress}
           disabled={isLoading}
         />
-
         <input
           type="password"
           placeholder="Нууц үг"
@@ -91,7 +124,6 @@ function AdAddUser() {
           onKeyPress={handleKeyPress}
           disabled={isLoading}
         />
-
         <input
           type="password"
           placeholder="Нууц үг давтах"
@@ -108,9 +140,8 @@ function AdAddUser() {
           onChange={(e) => setRole(e.target.value)}
           disabled={isLoading}
         >
-          <option value="user">Хэрэглэгч</option>
-          <option value="admin">Админ</option>
-          <option value="teacher">Багш</option>
+          <option value="teacher">teacher</option>
+          <option value="store">store</option>
         </select>
 
         {error && <div className="error-text">{error}</div>}
@@ -119,9 +150,16 @@ function AdAddUser() {
         <button
           className="login-btn"
           onClick={handleAddUser}
-          disabled={isLoading || !username.trim() || !password.trim() || !phone.trim()}
+          disabled={
+            isLoading ||
+            !firstName.trim() ||
+            !lastName.trim() ||
+            !email.trim() ||
+            !phoneNumber.trim() ||
+            !password.trim()
+          }
         >
-          {isLoading ? 'Нэмэгдэж байна...' : 'Нэмэх'}
+          {isLoading ? "Нэмэгдэж байна..." : "Нэмэх"}
         </button>
       </div>
     </div>

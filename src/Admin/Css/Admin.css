@@ -236,6 +236,48 @@
   font-weight: 500;
   letter-spacing: 0.02em;
 }
+.responsive-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+@media (max-width: 768px) {
+  .content-page {
+    padding: 15px;
+  }
+
+  .content-table th,
+  .content-table td {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .btn-edit,
+  .btn-delete {
+    font-size: 12px;
+    padding: 4px 8px;
+    margin: 2px 0;
+  }
+
+  .content-table td div {
+    flex-direction: column !important;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-table th,
+  .content-table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .btn-edit,
+  .btn-delete {
+    width: 100%;
+    display: block;
+    margin-bottom: 5px;
+  }
+}
 
 .content-page {
   padding: 20px;
@@ -293,11 +335,4 @@
 .btn-delete {
   background-color: #f44336;
   color: white;
-}
-
-.appointment-box {
-  margin-top: 24px;
-  padding: 16px;
-  background: #f4f4f4;
-  border-radius: 8px;
 }
