@@ -1,46 +1,22 @@
 import React, { useEffect, useState } from "react";
 import "../Css/Admin.css";
 import Rating from "@mui/material/Rating";
-import PersonIcon from "@mui/icons-material/Person"; // Profile icon
-import PhoneIcon from "@mui/icons-material/Phone";
-
+import axiosInstance from "../../axiosInstance"
 function AdTeachers() {
   const [teachers, setTeachers] = useState([]);
 
   useEffect(() => {
-    const tempTeachers = [
-      {
-        id: 1,
-        name: "С. Болдбаатар",
-        email: "boldbaatar@example.com",
-        courses: 12,
-        students: 156,
-        revenue: 450000,
-        rating: 4.5,
-        joined: "2024-08-15",
-      },
-      {
-        id: 2,
-        name: "Б. Сарантуяа",
-        email: "sarantuya@example.com",
-        courses: 10,
-        students: 120,
-        revenue: 375000,
-        rating: 4.2,
-        joined: "2025-06-20",
-      },
-      {
-        id: 3,
-        name: "Д. Мөнх-Эрдэнэ",
-        email: "munkherdene@example.com",
-        courses: 8,
-        students: 98,
-        revenue: 290000,
-        rating: 4.0,
-        joined: "2025-07-12",
-      },
-    ];
-    setTeachers(tempTeachers);
+    const fetchTeachers = async () => {
+      try {
+        const response = await axiosInstance.get("user/getTeacherStat");
+        console.log("Fetched teachers:", response.data);
+        setTeachers(response.data);
+      } catch (error) {
+        console.error("Error fetching teacher stats:", error);
+      }
+    };
+
+    fetchTeachers();
   }, []);
 
   return (
@@ -54,7 +30,7 @@ function AdTeachers() {
               <th>Гүйцэтгэл</th>
               <th>Цалин</th>
               <th>Чансаа</th>
-              <th>бүртгүүлсэн</th>
+              <th>Бүртгүүлсэн</th>
               <th>Нэмэлт</th>
             </tr>
           </thead>
@@ -72,7 +48,7 @@ function AdTeachers() {
                 <td>
                   {teacher.courses} Сургалт
                   <br />
-                  {teacher.students} сурагч
+                  {teacher.students} Сурагч
                 </td>
                 <td className="paid">₮{teacher.revenue.toLocaleString()}</td>
                 <td>
@@ -89,7 +65,7 @@ function AdTeachers() {
                 </td>
                 <td>{teacher.joined}</td>
                 <td>
-                  <button className="btn-edit">Профайл </button>
+                  <button className="btn-edit">Профайл</button>
                   <button className="btn-delete">Холбогдох</button>
                 </td>
               </tr>

@@ -15,7 +15,6 @@ function AdLogin() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // Redirect back to the page user wanted before login or default to /admin/panel
   const from = location.state?.from?.pathname || "/admin/panel";
 
   const setAuthToken = (token) => {
@@ -33,7 +32,6 @@ function AdLogin() {
     setIsLoading(true);
 
     try {
-      // Send login request
       const res = await axiosInstance.post("/admin/adminLogin", {
         phoneNumber: phoneNumber.trim(),
         password: password.trim(),
@@ -49,14 +47,11 @@ function AdLogin() {
 
       setAuthToken(accessToken);
 
-      // Get logged-in user details
       const userRes = await axiosInstance.get("/user/getUser");
       const adminUser = userRes.data;
 
-      // Save user and tokens in context
       login(adminUser, accessToken, refreshToken);
 
-      // Navigate to the page user tried to access before login, or admin panel by default
       navigate(from, { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || "Нэвтрэхэд алдаа гарлаа");
