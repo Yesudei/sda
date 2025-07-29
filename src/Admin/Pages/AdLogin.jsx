@@ -52,7 +52,7 @@ function AdLogin() {
       const adminUser = userRes.data.user;
 
       login(adminUser, accessToken, refreshToken);
-      console.log("User role:", adminUser.role);
+      // console.log("User role:", adminUser.role);
 
       if (adminUser.role === "teacher") {
         navigate("/teacher/panel", { replace: true });

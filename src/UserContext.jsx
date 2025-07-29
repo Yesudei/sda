@@ -9,22 +9,21 @@ export const UserProvider = ({ children }) => {
   const [refreshToken, setRefreshToken] = useState(null);
 
   // 🔁 Load from localStorage on first load
-  useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    const savedAccessToken = localStorage.getItem("accessToken");
-    const savedRefreshToken = localStorage.getItem("refreshToken");
+  const [loading, setLoading] = useState(true);
 
-    if (savedUser && savedAccessToken) {
-      setUser(JSON.parse(savedUser));
-      setAccessToken(savedAccessToken);
-      setRefreshToken(savedRefreshToken);
+useEffect(() => {
+  const savedUser = localStorage.getItem("user");
+  const savedAccessToken = localStorage.getItem("accessToken");
 
-      // Set token for axios
-      axiosInstance.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${savedAccessToken}`;
-    }
-  }, []);
+  if (savedUser && savedAccessToken) {
+    setUser(JSON.parse(savedUser));
+    setAccessToken(savedAccessToken);
+    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${savedAccessToken}`;
+  }
+
+  setLoading(false); // ✅ mark loading as complete
+}, []);
+
 
   const login = (userData, access, refresh) => {
     setUser(userData);

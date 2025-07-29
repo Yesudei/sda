@@ -67,42 +67,47 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} /> {/* ✅ Added this line */}
+      <Route path="/forgot-password" element={<ForgotPassword />} />{" "}
+      {/* ✅ Added this line */}
       <Route path="/otp-verification" element={<OTPVerification />} />
       <Route path="/shop" element={<Shop />} />
       <Route path="/cart" element={<ShoppingCart />} />
       <Route path="/description/:kitId" element={<Description />} />
       <Route path="/subject" element={<Subject />} />
-
       {/* Admin routes */}
       {/* Admin routes - protected */}
-<Route
-  path="/admin"
-  element={
-    <RequireAuth>
-      <AdminLayout />
-    </RequireAuth>
-  }
->
-  <Route path="panel" element={<AdDashboard />} />
-  <Route path="settings" element={<AdSettings />} />
-  <Route path="addUser" element={<AdAddUser />} />
-  <Route path="shop" element={<AdShop />} />
-  <Route path="teacher" element={<AdTeachers />} />
-  <Route path="content" element={<AdContent />} />
-  <Route path="financial" element={<AdFinancial />} />
-</Route>
-{/* Admin login remains public */}
-<Route path="/admin/login" element={<AdLogin />} />
-
+      <Route
+        path="/admin"
+        element={
+          <RequireAuth>
+            <AdminLayout />
+          </RequireAuth>
+        }
+      >
+        <Route path="panel" element={<AdDashboard />} />
+        <Route path="settings" element={<AdSettings />} />
+        <Route path="addUser" element={<AdAddUser />} />
+        <Route path="shop" element={<AdShop />} />
+        <Route path="teacher" element={<AdTeachers />} />
+        <Route path="content" element={<AdContent />} />
+        <Route path="financial" element={<AdFinancial />} />
+      </Route>
+      {/* Admin login remains public */}
+      <Route path="/admin/login" element={<AdLogin />} />
       {/* Teacher routes */}
-      <Route path="/teacher" element={<TeachLayout />}>
+      <Route
+        path="/teacher"
+        element={
+          <RequireAuth allowedRoles={["teacher"]}>
+            <TeachLayout />
+          </RequireAuth>
+        }
+      >
         <Route path="panel" element={<TeachDashboard />} />
         <Route path="content" element={<TeachContent />} />
         <Route path="student" element={<TeachStudent />} />
         <Route path="settings" element={<TeachSettings />} />
       </Route>
-
       {/* Protected routes with sidebar */}
       <Route
         element={
@@ -111,13 +116,11 @@ function App() {
           </RequireAuth>
         }
       />
-
       <Route element={<LayoutWithSidebar />}>
         <Route path="/student-portal" element={<StudentPortal />} />
         <Route path="/lessons" element={<LessonFree />} />
         <Route path="/assignments" element={<Assignments />} />
       </Route>
-
       {/* Redirect unknown routes */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

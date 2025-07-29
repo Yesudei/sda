@@ -1,16 +1,20 @@
-import React, { useContext } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { UserContext } from './UserContext';
+import { useContext } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { UserContext } from "./UserContext";
 
-const RequireAuth = ({ children }) => {
-  const { user } = useContext(UserContext);
+function RequireAuth({ children, allowedRoles }) {
+  const { user, accessToken } = useContext(UserContext);
   const location = useLocation();
 
-  if (!user) {
+  if (!user || !accessToken) {
     return <Navigate to="/admin/login" state={{ from: location }} replace />;
   }
 
+  if (allowedRoles && !allowedRoles.includes(user.role)) {
+    return <Navigate to="/" replace />;
+  }
+
   return children;
-};
+}
 
 export default RequireAuth;

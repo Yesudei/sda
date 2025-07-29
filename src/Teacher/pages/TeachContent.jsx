@@ -1,40 +1,35 @@
-import React, { useEffect, useState } from "react";
-import "../../Admin/Css/Admin.css"
+import React, { useEffect, useState, useContext } from "react";
+import "../../Admin/Css/Admin.css";
+import axiosInstance from "../../axiosInstance"; 
+import { UserContext } from "../../UserContext";
+
 function TeachContent() {
   const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { user } = useContext(UserContext); 
 
   useEffect(() => {
-    const mockCourses = [
-      {
-        id: 1,
-        title: "Мэргэжлийн",
-        videos: 12,
-        students: 156,
-        revenue: 450000,
-        rating: 4.5,
-        lastUpdated: "2025-07-15",
-      },
-      {
-        id: 2,
-        title: "Цохилтот",
-        videos: 10,
-        students: 120,
-        revenue: 390000,
-        rating: 4.3,
-        lastUpdated: "2025-07-20",
-      },
-      {
-        id: 3,
-        title: "Анхан шат",
-        videos: 8,
-        students: 95,
-        revenue: 280000,
-        rating: 4.1,
-        lastUpdated: "2025-07-10",
-      },
-    ];
-    setCourses(mockCourses);
+    const fetchCourses = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const res = await axiosInstance.post("/teacher/getOwnCourses");
+
+        setCourses(res.data);
+      } catch (err) {
+        setError(err.response?.data?.message || "Сургалтуудыг авахад алдаа гарлаа");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
   }, []);
+
+  if (loading) return <div>Түр хүлээнэ үү...</div>;
+  if (error) return <div style={{ color: "red" }}>{error}</div>;
 
   return (
     <div className="content-page">
@@ -47,23 +42,35 @@ function TeachContent() {
             <th>Цалин</th>
             <th>Чансаа</th>
             <th>Сүүлд шинэчлэгдсэн</th>
-            <th>,</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          {courses.map((course) => (
-            <tr key={course.id}>
-              <td>{course.title}</td>
-              <td>{course.videos} Бичлэгүүд<br />{course.students} Сурагчид</td>
-              <td className="paid">₮{course.revenue.toLocaleString()}</td>
-              <td>{course.rating}</td>
-              <td>{course.lastUpdated}</td>
-              <td>
-                <button className="btn-edit">Видео нэмэх</button>
-                <button className="btn-delete">Дэлгэрэнгүй</button>
+          {courses.length === 0 ? (
+            <tr>
+              <td colSpan={6} style={{ textAlign: "center" }}>
+                Сургалт олдсонгүй.
               </td>
             </tr>
-          ))}
+          ) : (
+            courses.map((course) => (
+              <tr key={course.id || course._id}>
+                <td>{course.title}</td>
+                <td>
+                  {course.videos} Бичлэгүүд
+                  <br />
+                  {course.students} Сурагчид
+                </td>
+                <td className="paid">₮{(course.revenue || 0).toLocaleString()}</td>
+                <td>{course.rating}</td>
+                <td>{course.lastUpdated}</td>
+                <td>
+                  <button className="btn-edit">Видео нэмэх</button>
+                  <button className="btn-delete">Дэлгэрэнгүй</button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

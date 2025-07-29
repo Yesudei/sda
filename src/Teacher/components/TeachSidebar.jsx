@@ -11,7 +11,7 @@ const TeachSidebar = () => {
   return (
     <div className="teach-sidebar">
       <div className="sidebar-header">
-        <h2>{teacherName}</h2>
+        <h2>teacher panel</h2>
       </div>
 
       <nav className="sidebar-nav">
