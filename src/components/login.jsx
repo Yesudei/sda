@@ -19,18 +19,11 @@ function Login() {
     setIsLoading(true);
 
     try {
-      console.log('Attempting login with:', {
-        phoneNumber: phoneNumber.trim(),
-        password: password.trim(),
-      });
-
       // 1. Login and get tokens
       const res = await axiosInstance.post('/user/login', {
         phoneNumber: phoneNumber.trim(),
         password: password.trim(),
       });
-
-      console.log('Login response:', res.data);
 
       const { accessToken, refreshToken } = res.data;
 
@@ -44,25 +37,19 @@ function Login() {
       setAuthToken(accessToken);
 
       // 3. Fetch user profile with Authorization header
-      console.log('Fetching user profile...');
       const userRes = await axiosInstance.get('/user/getUser', {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
+
       const user = userRes.data;
-
       console.log('User profile:', user);
-
-      // 4. Save user and tokens in context and localStorage
       login(user, accessToken, refreshToken);
-
-      // 5. Navigate to protected page
       navigate('/student-portal');
     } catch (err) {
       console.error('Login error:', err);
-
       setError(
         err.response?.data?.message ||
-          (err.request ? 'Server did not respond.' : 'Нэвтрэхэд алдаа гарлаа')
+        (err.request ? 'Server did not respond.' : 'Нэвтрэхэд алдаа гарлаа')
       );
     } finally {
       setIsLoading(false);
