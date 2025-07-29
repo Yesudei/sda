@@ -75,16 +75,26 @@ function App() {
       <Route path="/subject" element={<Subject />} />
 
       {/* Admin routes */}
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route path="panel" element={<AdDashboard />} />
-        <Route path="settings" element={<AdSettings />} />
-        <Route path="addUser" element={<AdAddUser />} />
-        <Route path="shop" element={<AdShop />} />
-        <Route path="teacher" element={<AdTeachers />} />
-        <Route path="content" element={<AdContent />} />
-        <Route path="financial" element={<AdFinancial />} />
-      </Route>
-      <Route path="/admin/login" element={<AdLogin />} />
+      {/* Admin routes - protected */}
+<Route
+  path="/admin"
+  element={
+    <RequireAuth>
+      <AdminLayout />
+    </RequireAuth>
+  }
+>
+  <Route path="panel" element={<AdDashboard />} />
+  <Route path="settings" element={<AdSettings />} />
+  <Route path="addUser" element={<AdAddUser />} />
+  <Route path="shop" element={<AdShop />} />
+  <Route path="teacher" element={<AdTeachers />} />
+  <Route path="content" element={<AdContent />} />
+  <Route path="financial" element={<AdFinancial />} />
+</Route>
+{/* Admin login remains public */}
+<Route path="/admin/login" element={<AdLogin />} />
+
 
       {/* Teacher routes */}
       <Route path="/teacher" element={<TeachLayout />}>

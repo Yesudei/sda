@@ -1,78 +1,69 @@
 import React, { useState, useContext } from "react";
 import "../../css/Login.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { UserContext } from "../../UserContext";
 import axiosInstance from "../../axiosInstance";
 
 function AdLogin() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useContext(UserContext);
 
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  // Redirect back to the page user wanted before login or default to /admin/panel
+  const from = location.state?.from?.pathname || "/admin/panel";
+
   const setAuthToken = (token) => {
-  if (token) {
-    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  } else {
-    delete axiosInstance.defaults.headers.common["Authorization"];
-  }
-};
+    if (token) {
+      axiosInstance.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${token}`;
+    } else {
+      delete axiosInstance.defaults.headers.common["Authorization"];
+    }
+  };
 
   const handleLogin = async () => {
-  setError("");
-  setIsLoading(true);
+    setError("");
+    setIsLoading(true);
 
-  console.log("Starting login...");
+    try {
+      // Send login request
+      const res = await axiosInstance.post("/admin/adminLogin", {
+        phoneNumber: phoneNumber.trim(),
+        password: password.trim(),
+      });
 
-  try {
-    console.log("Sending login request to /admin/adminLogin", {
-      phoneNumber: phoneNumber.trim(),
-      password: password.trim(),
-    });
+      const { accessToken, refreshToken } = res.data;
 
-    const res = await axiosInstance.post("/admin/adminLogin", {
-      phoneNumber: phoneNumber.trim(),
-      password: password.trim(),
-    });
+      if (!accessToken || !refreshToken) {
+        setError("Админ нэвтрэхэд алдаа гарлаа");
+        setIsLoading(false);
+        return;
+      }
 
-    console.log("Login response:", res.data);
+      setAuthToken(accessToken);
 
-    const { accessToken, refreshToken } = res.data;
+      // Get logged-in user details
+      const userRes = await axiosInstance.get("/user/getUser");
+      const adminUser = userRes.data;
 
-    if (!accessToken || !refreshToken) {
-      console.error("Tokens missing in login response");
-      setError("Админ нэвтрэхэд алдаа гарлаа");
+      // Save user and tokens in context
+      login(adminUser, accessToken, refreshToken);
+
+      // Navigate to the page user tried to access before login, or admin panel by default
+      navigate(from, { replace: true });
+    } catch (err) {
+      setError(err.response?.data?.message || "Нэвтрэхэд алдаа гарлаа");
+    } finally {
       setIsLoading(false);
-      return;
     }
-
-    setAuthToken(accessToken); 
-
-
-    const userRes = await axiosInstance.get("/user/getUser");
-
-    console.log("User details:", userRes.data);
-
-    const adminUser = userRes.data;
-
-    login(adminUser, accessToken, refreshToken);
-
-    navigate("/admin/panel");
-  } catch (err) {
-    console.error("Login error:", err);
-    console.error("Full error response:", err.response);
-
-    setError(
-      err.response?.data?.message || "Нэвтрэхэд алдаа гарлаа"
-    );
-  } finally {
-    setIsLoading(false);
-  }
-};
-
+  };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") handleLogin();
