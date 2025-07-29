@@ -51,9 +51,8 @@ function AdLogin() {
 
     setAuthToken(accessToken); 
 
-    console.log("Fetching user details from /admin/me");
 
-    const userRes = await axiosInstance.get("/admin/me");
+    const userRes = await axiosInstance.get("/user/getUser");
 
     console.log("User details:", userRes.data);
 
@@ -61,7 +60,7 @@ function AdLogin() {
 
     login(adminUser, accessToken, refreshToken);
 
-    navigate("/admin/dashboard");
+    navigate("/admin/panel");
   } catch (err) {
     console.error("Login error:", err);
     console.error("Full error response:", err.response);
