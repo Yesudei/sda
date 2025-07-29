@@ -43,8 +43,11 @@ function Login() {
       // 2. Set token header for subsequent requests
       setAuthToken(accessToken);
 
-      // 3. Fetch user profile
-      const userRes = await axiosInstance.get('/user/getuser');
+      // 3. Fetch user profile with Authorization header
+      console.log('Fetching user profile...');
+      const userRes = await axiosInstance.get('/user/getUser', {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
       const user = userRes.data;
 
       console.log('User profile:', user);
