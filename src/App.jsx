@@ -95,7 +95,6 @@ function App() {
 {/* Admin login remains public */}
 <Route path="/admin/login" element={<AdLogin />} />
 
-
       {/* Teacher routes */}
       <Route path="/teacher" element={<TeachLayout />}>
         <Route path="panel" element={<TeachDashboard />} />
