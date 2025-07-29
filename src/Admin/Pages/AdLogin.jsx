@@ -48,11 +48,19 @@ function AdLogin() {
       setAuthToken(accessToken);
 
       const userRes = await axiosInstance.get("/user/getUser");
-      const adminUser = userRes.data;
+
+      const adminUser = userRes.data.user;
 
       login(adminUser, accessToken, refreshToken);
+      console.log("User role:", adminUser.role);
 
-      navigate(from, { replace: true });
+      if (adminUser.role === "teacher") {
+        navigate("/teacher/panel", { replace: true });
+      } else if (adminUser.role === "admin") {
+        navigate("/admin/panel", { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Нэвтрэхэд алдаа гарлаа");
     } finally {

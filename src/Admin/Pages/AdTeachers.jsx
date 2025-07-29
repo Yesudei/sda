@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "../Css/Admin.css";
 import Rating from "@mui/material/Rating";
-import axiosInstance from "../../axiosInstance"
+import axiosInstance from "../../axiosInstance";
 function AdTeachers() {
   const [teachers, setTeachers] = useState([]);
 
   useEffect(() => {
     const fetchTeachers = async () => {
       try {
-        const response = await axiosInstance.get("user/getTeacherStat");
-        console.log("Fetched teachers:", response.data);
-        setTeachers(response.data);
+        const response = await axiosInstance.get("/admin/getTeacherStat");
+        // console.log("Fetched teachers:", response.data.data);
+        setTeachers(response.data.data);
       } catch (error) {
         console.error("Error fetching teacher stats:", error);
       }
@@ -36,7 +36,7 @@ function AdTeachers() {
           </thead>
           <tbody>
             {teachers.map((teacher) => (
-              <tr key={teacher.id}>
+              <tr key={teacher.teacherId}>
                 <td>
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <strong>{teacher.name}</strong>
@@ -50,7 +50,9 @@ function AdTeachers() {
                   <br />
                   {teacher.students} Сурагч
                 </td>
-                <td className="paid">₮{teacher.revenue.toLocaleString()}</td>
+                <td className="paid">
+                  ₮{(teacher.revenue || 0).toLocaleString()}
+                </td>
                 <td>
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <Rating

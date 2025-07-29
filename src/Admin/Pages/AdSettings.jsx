@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Button,
@@ -7,28 +7,99 @@ import {
   Tab,
   Typography,
 } from "@mui/material";
-import "../../Teacher/css/Teacher.css"; 
+import axiosInstance from "../../axiosInstance"; // Make sure axios has auth headers setup
+import "../../Teacher/css/Teacher.css";
 
 const AdSettings = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [formData, setFormData] = useState({
-    firstName: "Хулан",
-    lastName: "Төгөлдөр",
-    email: "admin@example.com",
-    phone: "99889955",
-    
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    newPassword: "",
+    confirmPassword: "",
   });
+  const [error, setError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // Fetch current user info on mount
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axiosInstance.get("/user/getUser");
+        const { firstName, lastName, email, phoneNumber } = res.data;
+        setFormData({
+          firstName: firstName || "",
+          lastName: lastName || "",
+          email: email || "",
+          phone: phoneNumber || "",
+          newPassword: "",
+          confirmPassword: "",
+        });
+      } catch (err) {
+        console.error("Failed to fetch user data:", err);
+        setError("Хэрэглэгчийн мэдээлэл авах үед алдаа гарлаа.");
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleTabChange = (_, newValue) => setActiveTab(newValue);
+  const handleTabChange = (_, newValue) => {
+    setActiveTab(newValue);
+    setError("");
+    setSuccessMsg("");
+  };
 
-  const handleSave = () => {
-    alert("Хадгалагдлаа");
-    console.log(formData);
+  const handleSave = async () => {
+    setError("");
+    setSuccessMsg("");
+
+    // Validate passwords if changing
+    if (
+      formData.newPassword !== "" &&
+      formData.newPassword !== formData.confirmPassword
+    ) {
+      setError("Нууц үгнүүд тохирохгүй байна.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const updateData = {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+      };
+
+      if (formData.newPassword) {
+        updateData.password = formData.newPassword;
+      }
+
+      await axiosInstance.put("/user/update", updateData);
+      setSuccessMsg("Мэдээлэл амжилттай хадгалагдлаа.");
+
+      // Clear password fields
+      setFormData((prev) => ({
+        ...prev,
+        newPassword: "",
+        confirmPassword: "",
+      }));
+    } catch (err) {
+      console.error("Update failed:", err);
+      setError(
+        err.response?.data?.message || "Мэдээлэл хадгалах үед алдаа гарлаа."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -74,6 +145,8 @@ const AdSettings = () => {
               label="Шинэ нууц үг"
               type="password"
               name="newPassword"
+              value={formData.newPassword}
+              onChange={handleChange}
               fullWidth
               margin="normal"
             />
@@ -81,14 +154,11 @@ const AdSettings = () => {
               label="Шинэ нууц үг давтах"
               type="password"
               name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
               fullWidth
               margin="normal"
             />
-            <Box display="flex" justifyContent="flex-end" mt={3}>
-              <Button variant="contained" onClick={handleSave}>
-                Хадгалах
-              </Button>
-            </Box>
           </>
         )}
 
@@ -113,14 +183,29 @@ const AdSettings = () => {
               fullWidth
               margin="normal"
             />
-            
-            <Box display="flex" justifyContent="flex-end" mt={3}>
-              <Button variant="contained" onClick={handleSave}>
-                Хадгалах
-              </Button>
-            </Box>
           </>
         )}
+
+        {error && (
+          <Typography color="error" sx={{ mt: 1 }}>
+            {error}
+          </Typography>
+        )}
+        {successMsg && (
+          <Typography color="success.main" sx={{ mt: 1 }}>
+            {successMsg}
+          </Typography>
+        )}
+
+        <Box display="flex" justifyContent="flex-end" mt={3}>
+          <Button
+            variant="contained"
+            onClick={handleSave}
+            disabled={loading}
+          >
+            {loading ? "Хадгалаж байна..." : "Хадгалах"}
+          </Button>
+        </Box>
       </div>
     </div>
   );

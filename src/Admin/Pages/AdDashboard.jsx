@@ -1,17 +1,57 @@
-import React from "react";
-import AdminLayout from "../Components/AdminLayout";
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../../axiosInstance";
 import "../Css/admin.css";
 
-const stats = [
-  { title: "Нийт хэрэглэгч", value: "1,234", growth: "Өмнөх сараас +12% " },
-  { title: "Нийт багш", value: "20", growth: "Өмнөх сараас +12%" },
-  { title: "Нийт сургалт", value: "156", growth: "Өмнөх сараас +12%" },
-  { title: "Дэлгүүр", value: "₮3.6M", growth: "Өмнөх сараас +12%" },
-  { title: "Сарын төлөв", value: "₮7.4M", growth: "Өмнөх сараас +12%" },
-  { title: "Рейтинг", value: "15.3%", growth: "Өмнөх сараас +12%" },
-];
-
 const AdDashboard = () => {
+  const [stats, setStats] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchDashboardInfo = async () => {
+      try {
+        const res = await axiosInstance.get("/admin/dashboardInfo");
+
+        const data = res.data.data;
+
+        const formattedStats = [
+          {
+            title: "Нийт хэрэглэгч",
+            value: data.totalUsers,
+          },
+          {
+            title: "Идэвхтэй багш",
+            value: data.activeTeachers,
+          },
+          {
+            title: "Нийт хичээл",
+            value: data.totalCourses,
+          },
+          {
+            title: "Сарын орлого",
+            value: `${data.monthlyRevenue}₮`,
+          },
+          {
+            title: "Орлогын өсөлт",
+            value: data.monthlyGrowthRate,
+          },
+        ];
+
+        setStats(formattedStats);
+      } catch (err) {
+        setError("Хяналтын мэдээллийг авч чадсангүй.");
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardInfo();
+  }, []);
+
+  if (loading) return <p>Уншиж байна...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
+
   return (
     <div className="dashboard">
       <h2 className="dashboard-title">Хяналтын самбар</h2>
@@ -22,7 +62,6 @@ const AdDashboard = () => {
             <div className="stat-card" key={index}>
               <h4 className="stat-title">{item.title}</h4>
               <p className="stat-value">{item.value}</p>
-              <span className="stat-growth">{item.growth}</span>
             </div>
           ))}
         </div>
