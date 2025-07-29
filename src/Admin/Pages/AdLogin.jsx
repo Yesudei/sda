@@ -13,41 +13,67 @@ function AdLogin() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const setAuthToken = (token) => {
+  if (token) {
+    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  } else {
+    delete axiosInstance.defaults.headers.common["Authorization"];
+  }
+};
 
   const handleLogin = async () => {
-    setError("");
-    setIsLoading(true);
+  setError("");
+  setIsLoading(true);
 
-    try {
-      const res = await axiosInstance.post("/admin/adminLogin", {
-        phoneNumber: phoneNumber.trim(),
-        password: password.trim(),
-      });
+  console.log("Starting login...");
 
-      const { accessToken, refreshToken } = res.data;
+  try {
+    console.log("Sending login request to /admin/adminLogin", {
+      phoneNumber: phoneNumber.trim(),
+      password: password.trim(),
+    });
 
-      if (!accessToken || !refreshToken) {
-        setError("Админ нэвтрэхэд алдаа гарлаа");
-        setIsLoading(false);
-        return;
-      }
+    const res = await axiosInstance.post("/admin/adminLogin", {
+      phoneNumber: phoneNumber.trim(),
+      password: password.trim(),
+    });
 
-      setAuthToken(accessToken);
+    console.log("Login response:", res.data);
 
-      const userRes = await axiosInstance.get("/admin/me");
+    const { accessToken, refreshToken } = res.data;
 
-      const adminUser = userRes.data;
-
-      login(adminUser, accessToken, refreshToken);
-
-      navigate("/admin/dashboard");
-    } catch (err) {
-      console.log("Login error:", err.response?.data);
-      setError(err.response?.data?.message || "Нэвтрэхэд алдаа гарлаа");
-    } finally {
+    if (!accessToken || !refreshToken) {
+      console.error("Tokens missing in login response");
+      setError("Админ нэвтрэхэд алдаа гарлаа");
       setIsLoading(false);
+      return;
     }
-  };
+
+    setAuthToken(accessToken); 
+
+    console.log("Fetching user details from /admin/me");
+
+    const userRes = await axiosInstance.get("/admin/me");
+
+    console.log("User details:", userRes.data);
+
+    const adminUser = userRes.data;
+
+    login(adminUser, accessToken, refreshToken);
+
+    navigate("/admin/dashboard");
+  } catch (err) {
+    console.error("Login error:", err);
+    console.error("Full error response:", err.response);
+
+    setError(
+      err.response?.data?.message || "Нэвтрэхэд алдаа гарлаа"
+    );
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") handleLogin();
