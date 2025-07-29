@@ -28,7 +28,7 @@ const recentActivities = [
 const TeachDashboard = () => {
   return (
     <div className="dashboard">
-      <h2 className="dashboard-title">Дашбоард</h2>
+      <h2 className="dashboard-title">Дашбоард  </h2>
 
       <div className="dashboard-top">
         <div className="stat-grid">

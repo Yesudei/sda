@@ -61,11 +61,11 @@ function Header(onScrollToFooter) {
         }`}
       >
         <div className="logoo">
-          <Logo />
+           <img src="/images/llogo.png" alt="logo test"  style={{height:"50px"}}/>
         </div>
         <nav className="nav-buttons">
           <button className="nav-btn" onClick={() => navigate("/subject")}>
-            Хичээлүүд
+            Хичээлүүд 
           </button>
           <button className="nav-btn" onClick={() => navigate("/shop")}>
             Дэлгүүр

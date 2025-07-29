@@ -1,141 +1,132 @@
 import React, { useState } from "react";
 import {
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  Modal,
   Box,
+  Button,
   TextField,
-  IconButton,
+  Paper,
+  Tabs,
+  Tab,
+  Typography,
 } from "@mui/material";
-import { AccountCircle, Email, Edit } from "@mui/icons-material";
+import "../../Teacher/css/Teacher.css";
 
-const style = {
-  modalBox: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 500,
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    borderRadius: 3,
-    p: 4,
-  },
-  card: {
-    maxWidth: 600,
-    margin: "40px auto",
-    padding: "20px",
-    borderRadius: 3,
-    boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
-    backgroundColor: "#fafafa",
-  },
-  infoLine: {
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-    marginBottom: "16px",
-  },
-};
-
-function AdSettings() {
-  const [adminData, setAdminData] = useState({
-    username: "AdminUser",
+const AdSettings = () => {
+  const [activeTab, setActiveTab] = useState(0);
+  const [formData, setFormData] = useState({
+    firstName: "Хулан",
+    lastName: "Төгөлдөр",
     email: "admin@example.com",
+    phone: "99889955",
   });
 
-  const [formData, setFormData] = useState({ ...adminData, password: "" });
-  const [isOpen, setIsOpen] = useState(false);
-
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setAdminData({ username: formData.username, email: formData.email });
-    setIsOpen(false);
+  const handleTabChange = (_, newValue) => setActiveTab(newValue);
+
+  const handleSave = () => {
+    // Save logic here
+    alert("Хадгалагдлаа");
+    console.log(formData);
   };
 
   return (
-    <div>
-      <Card sx={style.card}>
-        <CardContent>
-          <Typography variant="h5" gutterBottom>
-            Тохиргоо
-          </Typography>
-          <div style={style.infoLine}>
-            <AccountCircle color="primary" />
-            <Typography variant="body1">
-              <strong>Нэр:</strong> {adminData.username}
-            </Typography>
-          </div>
-          <div style={style.infoLine}>
-            <Email color="primary" />
-            <Typography variant="body1">
-              <strong>И-Мейл:</strong> {adminData.email}
-            </Typography>
-          </div>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<Edit />}
-            onClick={() => setIsOpen(true)}
+    <div className="settings-page">
+      <h1 className="settings-title">Тохиргоо</h1>
+      <Box className="settings-layout">
+        <Paper elevation={2} className="settings-sidebar">
+          <Tabs
+            orientation="vertical"
+            value={activeTab}
+            onChange={handleTabChange}
+            // TabIndicatorProps={{ style: { backgroundColor: "#272654" } }}
+            textColor="inherit"
           >
-            Засах
-          </Button>
-        </CardContent>
-      </Card>
+            <Tab label="Хэрэглэгчийн мэдээлэл" />
+            <Tab label="Хувийн тохиргоо" />
+          </Tabs>
+        </Paper>
 
-      <Modal open={isOpen} onClose={() => setIsOpen(false)}>
-        <Box sx={style.modalBox}>
-          <Typography variant="h6" mb={2}>
-            Админ мэдээлэл засах
-          </Typography>
-          <form onSubmit={handleSubmit}>
-            <TextField
-              fullWidth
-              label="Нэр"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              margin="normal"
-            />
-            <TextField
-              fullWidth
-              label="И-мейл"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              margin="normal"
-              type="email"
-            />
-            <TextField
-              fullWidth
-              label="Нууц үг"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              margin="normal"
-              type="password"
-            />
-            <Box mt={2} display="flex" justifyContent="flex-end" gap={1}>
-              <Button onClick={() => setIsOpen(false)} color="secondary">
-                Cancel
-              </Button>
-              <Button type="submit" variant="contained" color="primary">
-                Save
-              </Button>
-            </Box>
-          </form>
-        </Box>
-      </Modal>
+        <Paper elevation={2} className="settings-form-container">
+          {activeTab === 0 && (
+            <>
+              <Typography variant="h6" gutterBottom>
+                Хэрэглэгчийн мэдээлэл
+              </Typography>
+              <Box className="form-grid">
+                <TextField
+                  label="Нэр"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  fullWidth
+                />
+                <TextField
+                  label="Овог"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  fullWidth
+                />
+                <TextField
+                  label="Имэйл"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  fullWidth
+                />
+                <TextField
+                  label="Бүртгэлтэй утас"
+                  name="phone"
+                  value={formData.phone}
+                  fullWidth
+                  disabled
+                />
+              </Box>
+              <Box display="flex" justifyContent="flex-end" gap={2} mt={3}>
+                <Button variant="outlined">Нууц үг солих</Button>
+                <Button variant="contained" onClick={handleSave}>
+                  Хадгалах
+                </Button>
+              </Box>
+            </>
+          )}
+
+          {activeTab === 1 && (
+            <>
+              <Typography variant="h6" gutterBottom>
+                Хувийн тохиргоо
+              </Typography>
+              <Box className="form-grid">
+                <TextField
+                  label="Нэр"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  fullWidth
+                />
+                <TextField
+                  label="Овог"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Box>
+
+              <Box display="flex" justifyContent="flex-end" mt={3}>
+                <Button variant="contained" onClick={handleSave}>
+                  Хадгалах
+                </Button>
+              </Box>
+            </>
+          )}
+        </Paper>
+      </Box>
     </div>
   );
-}
+};
 
 export default AdSettings;
