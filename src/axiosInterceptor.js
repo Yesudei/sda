@@ -51,7 +51,7 @@ export const useAxiosInterceptor = () => {
           isRefreshing = true;
 
           try {
-            const response = await axiosInstance.post('/user/refresh-token', { refreshToken });
+            const response = await axiosInstance.post('/user/refreshToken', { refreshToken });
 
             const newAccessToken = response.data.accessToken;
 
