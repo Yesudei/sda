@@ -16,8 +16,8 @@ function TeachContent() {
 
       try {
         const res = await axiosInstance.post("/teacher/getOwnCourses");
-
-        setCourses(res.data);
+// console.log("Fetched courses:", res.data);
+        setCourses(res.data.data);
       } catch (err) {
         setError(err.response?.data?.message || "Сургалтуудыг авахад алдаа гарлаа");
       } finally {

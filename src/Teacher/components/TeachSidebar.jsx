@@ -1,17 +1,26 @@
 // src/Teacher/Components/TeachSidebar.jsx
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
-import "../css/Teacher.css"
+import { NavLink, useNavigate } from "react-router-dom";
+import "../css/Teacher.css";
 import { UserContext } from "../../UserContext";
 
 const TeachSidebar = () => {
-  const { user } = useContext(UserContext);
-  const teacherName = user ? `${user.firstName} ${user.lastName}` : "Teacher Panel";
+  const { user, logout } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const teacherName = user
+    ? `${user.firstName} ${user.lastName}`
+    : "Teacher Panel";
+
+  const handleLogout = () => {
+    logout();
+    navigate("/teacher/login");
+  };
 
   return (
     <div className="teach-sidebar">
       <div className="sidebar-header">
-        <h2>teacher panel</h2>
+        <h2>{teacherName}</h2>
       </div>
 
       <nav className="sidebar-nav">
@@ -57,14 +66,18 @@ const TeachSidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/admin/login"
-              className={({ isActive }) =>
-                `sidebar-link logout-link ${isActive ? "active-link" : ""}`
-              }
+            <button
+              onClick={handleLogout}
+              className="sidebar-link logout-link"
+              style={{
+                cursor: "pointer",
+                background: "none",
+                border: "none",
+                padding: 0,
+              }}
             >
               🚪 Гарах
-            </NavLink>
+            </button>
           </li>
         </ul>
       </nav>

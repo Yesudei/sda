@@ -8,6 +8,9 @@ function AdTeachers() {
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [panelVisible, setPanelVisible] = useState(false);
   const [panelMounted, setPanelMounted] = useState(false);
+  const [contactTeacher, setContactTeacher] = useState(null);
+  const [contactPanelVisible, setContactPanelVisible] = useState(false);
+  const [contactPanelMounted, setContactPanelMounted] = useState(false);
 
   useEffect(() => {
     const fetchTeachers = async () => {
@@ -33,6 +36,19 @@ function AdTeachers() {
     setTimeout(() => {
       setPanelMounted(false);
       setSelectedTeacher(null);
+    }, 300);
+  };
+  const openContactPanel = (teacher) => {
+    setContactTeacher(teacher);
+    setContactPanelMounted(true);
+    setTimeout(() => setContactPanelVisible(true), 10);
+  };
+
+  const closeContactPanel = () => {
+    setContactPanelVisible(false);
+    setTimeout(() => {
+      setContactPanelMounted(false);
+      setContactTeacher(null);
     }, 300);
   };
 
@@ -90,7 +106,12 @@ function AdTeachers() {
                   >
                     Профайл
                   </button>
-                  <button className="btn-delete">Холбогдох</button>
+                  <button
+                    className="btn-delete"
+                    onClick={() => openContactPanel(teacher)}
+                  >
+                    Холбогдох
+                  </button>
                 </td>
               </tr>
             ))}
@@ -149,6 +170,61 @@ function AdTeachers() {
           <div
             className={`profile-backdrop ${panelVisible ? "active" : ""}`}
             onClick={closePanel}
+          />
+        </>
+      )}
+      {contactPanelMounted && (
+        <>
+          <div
+            className={`teacher-profile-panel ${
+              contactPanelVisible ? "slide-in" : "slide-out"
+            }`}
+            style={{
+              width: "400px",
+              padding: "24px",
+              backgroundColor: "#f9f9f9",
+            }}
+          >
+            <button className="close-btn" onClick={closeContactPanel}>
+              ✕
+            </button>
+            <h3>Багштай холбоо барих</h3>
+            <p>
+              <strong>Нэр:</strong> {contactTeacher?.name}
+            </p>
+            <p>
+              <strong>И-мэйл:</strong> {contactTeacher?.email}
+            </p>
+            <p>
+              <strong>Утас:</strong>{" "}
+              {contactTeacher?.phone || "Мэдээлэл байхгүй"}
+            </p>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                alert("Contact form submitted!");
+                closeContactPanel();
+              }}
+            >
+              <label htmlFor="message">Зурвас:</label>
+              <textarea
+                id="message"
+                rows="5"
+                style={{
+                  width: "100%",
+                  marginTop: "8px",
+                  marginBottom: "12px",
+                }}
+                required
+              />
+              <button type="submit" className="btn-edit">
+                Илгээх
+              </button>
+            </form>
+          </div>
+          <div
+            className="profile-backdrop active"
+            onClick={closeContactPanel}
           />
         </>
       )}

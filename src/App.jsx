@@ -77,13 +77,13 @@ function App() {
       {/* Admin routes */}
       {/* Admin routes - protected */}
       <Route
-        path="/admin"
-        element={
-          <RequireAuth>
-            <AdminLayout />
-          </RequireAuth>
-        }
-      >
+  path="/admin"
+  element={
+    <RequireAuth allowedRoles={["admin"]}>
+      <AdminLayout />
+    </RequireAuth>
+  }
+>
         <Route path="panel" element={<AdDashboard />} />
         <Route path="settings" element={<AdSettings />} />
         <Route path="addUser" element={<AdAddUser />} />

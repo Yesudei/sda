@@ -1,9 +1,17 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "../Css/Admin.css";
 import { UserContext } from "../../UserContext";
+
 const AdminSidebar = () => {
-  const { user } = useContext(UserContext);
+  const { user, logout } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  // Logout handler - clears user context and navigates to admin login
+  const handleLogout = () => {
+    logout();
+    navigate("/admin/login");
+  };
 
   return (
     <div className="admin-sidebar">
@@ -88,14 +96,13 @@ const AdminSidebar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink
-              to="/admin/login"
-              className={({ isActive }) =>
-                `sidebar-link logout-link ${isActive ? "active-link" : ""}`
-              }
+            <button
+              onClick={handleLogout}
+              className="sidebar-link logout-link"
+              style={{ cursor: "pointer", background: "none", border: "none", padding: 0 }}
             >
               🚪 Logout
-            </NavLink>
+            </button>
           </li>
         </ul>
       </nav>

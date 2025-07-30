@@ -11,7 +11,7 @@ function AdAddUser() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [role, setRole] = useState("user");
+  const [role, setRole] = useState("teacher");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +30,9 @@ function AdAddUser() {
     setIsLoading(true);
 
     try {
-      const token = localStorage.getItem("token");
+
+      const token = localStorage.getItem("accessToken");
+      console.log("Sending token:", token);
 
       const res = await axiosInstance.post(
         "/admin/create",
@@ -56,7 +58,7 @@ function AdAddUser() {
       setPhoneNumber("");
       setPassword("");
       setRepeatPassword("");
-      setRole("user");
+      setRole("teacher");
     } catch (err) {
       console.error("Full error response:", err.response);
       setError(err.response?.data?.message || "Хэрэглэгч нэмэхэд алдаа гарлаа");

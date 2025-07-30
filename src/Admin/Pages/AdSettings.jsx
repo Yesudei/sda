@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Button,
-  TextField,
-  Tabs,
-  Tab,
-  Typography,
-} from "@mui/material";
-import axiosInstance from "../../axiosInstance"; // Make sure axios has auth headers setup
+import { Box, Button, TextField, Tabs, Tab, Typography } from "@mui/material";
+import axiosInstance from "../../axiosInstance";
 import "../../Teacher/css/Teacher.css";
 
 const AdSettings = () => {
@@ -24,28 +17,34 @@ const AdSettings = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Fetch current user info on mount
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await axiosInstance.get("/user/getUser");
-        const { firstName, lastName, email, phoneNumber } = res.data;
-        setFormData({
-          firstName: firstName || "",
-          lastName: lastName || "",
-          email: email || "",
-          phone: phoneNumber || "",
-          newPassword: "",
-          confirmPassword: "",
-        });
-      } catch (err) {
-        console.error("Failed to fetch user data:", err);
-        setError("Хэрэглэгчийн мэдээлэл авах үед алдаа гарлаа.");
-      }
-    };
+  const [fetchLoading, setFetchLoading] = useState(true);
 
-    fetchUser();
-  }, []);
+useEffect(() => {
+  const fetchUser = async () => {
+    setFetchLoading(true);
+    try {
+      const res = await axiosInstance.get("/user/getUser");
+      const { firstName, lastName, email, phoneNumber } = res.data.user;
+      setFormData({
+        firstName: firstName || "",
+        lastName: lastName || "",
+        email: email || "",
+        phone: phoneNumber || "",
+        newPassword: "",
+        confirmPassword: "",
+      });
+      setError("");
+    } catch (err) {
+      console.error("Failed to fetch user data:", err);
+      setError("Хэрэглэгчийн мэдээлэл авах үед алдаа гарлаа.");
+    } finally {
+      setFetchLoading(false);
+    }
+  };
+
+  fetchUser();
+}, []);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,7 +61,6 @@ const AdSettings = () => {
     setError("");
     setSuccessMsg("");
 
-    // Validate passwords if changing
     if (
       formData.newPassword !== "" &&
       formData.newPassword !== formData.confirmPassword
@@ -86,7 +84,6 @@ const AdSettings = () => {
       await axiosInstance.put("/user/update", updateData);
       setSuccessMsg("Мэдээлэл амжилттай хадгалагдлаа.");
 
-      // Clear password fields
       setFormData((prev) => ({
         ...prev,
         newPassword: "",
@@ -198,11 +195,7 @@ const AdSettings = () => {
         )}
 
         <Box display="flex" justifyContent="flex-end" mt={3}>
-          <Button
-            variant="contained"
-            onClick={handleSave}
-            disabled={loading}
-          >
+          <Button variant="contained" onClick={handleSave} disabled={loading}>
             {loading ? "Хадгалаж байна..." : "Хадгалах"}
           </Button>
         </Box>

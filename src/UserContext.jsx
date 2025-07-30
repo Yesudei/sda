@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useRef } from "react";
 import axiosInstance from "./axiosInstance";
 
 export const UserContext = createContext();
@@ -7,23 +7,36 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
-
-  // 🔁 Load from localStorage on first load
   const [loading, setLoading] = useState(true);
 
-useEffect(() => {
-  const savedUser = localStorage.getItem("user");
-  const savedAccessToken = localStorage.getItem("accessToken");
+  const logoutTimerRef = useRef(null);
+  const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 
-  if (savedUser && savedAccessToken) {
-    setUser(JSON.parse(savedUser));
-    setAccessToken(savedAccessToken);
-    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${savedAccessToken}`;
-  }
+  // Load from localStorage
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    const savedAccessToken = localStorage.getItem("accessToken");
+    const savedRefreshToken = localStorage.getItem("refreshToken");
 
-  setLoading(false); // ✅ mark loading as complete
-}, []);
+    if (savedUser && savedAccessToken && savedRefreshToken) {
+      setUser(JSON.parse(savedUser));
+      setAccessToken(savedAccessToken);
+      setRefreshToken(savedRefreshToken);
+      axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${savedAccessToken}`;
+      startLogoutTimer(); // ✅ Start countdown on reload
+    }
 
+    setLoading(false);
+  }, []);
+
+  // Helper to start logout countdown
+  const startLogoutTimer = () => {
+    clearTimeout(logoutTimerRef.current);
+    logoutTimerRef.current = setTimeout(() => {
+      logout();
+      alert("30 минут өнгөрсөн тул та системээс гарлаа.");
+    }, SESSION_TIMEOUT);
+  };
 
   const login = (userData, access, refresh) => {
     setUser(userData);
@@ -35,6 +48,8 @@ useEffect(() => {
     localStorage.setItem("refreshToken", refresh);
 
     axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${access}`;
+
+    startLogoutTimer(); // ✅ Start timer on login
   };
 
   const logout = () => {
@@ -47,6 +62,8 @@ useEffect(() => {
     localStorage.removeItem("refreshToken");
 
     delete axiosInstance.defaults.headers.common["Authorization"];
+
+    clearTimeout(logoutTimerRef.current); // ✅ Clear timer on logout
   };
 
   return (
@@ -57,9 +74,10 @@ useEffect(() => {
         refreshToken,
         login,
         logout,
+        setToken: setAccessToken,
       }}
     >
-      {children}
+      {!loading && children}
     </UserContext.Provider>
   );
 };
