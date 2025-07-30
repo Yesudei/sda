@@ -263,6 +263,118 @@
     align-items: flex-start;
   }
 }
+.teacher-profile-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 350px;
+  height: 100%;
+  background: rgb(255, 255, 255);
+  box-shadow: -3px 0 10px rgba(0, 0, 0, 0.4);
+  padding: 30px;
+  z-index: 1000;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.35s ease-in-out;
+}
+
+.teacher-profile-panel.slide-in {
+  transform: translateX(0%);
+}
+
+.teacher-profile-panel.slide-out {
+  transform: translateX(100%);
+}
+
+
+.slide-in {
+  transform: translateX(0%);
+}
+
+.slide-out {
+  transform: translateX(100%);
+}
+
+.teacher-profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.teacher-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #555;
+  margin-right: 16px;
+}
+
+.profile-detail {
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #666;
+  cursor: pointer;
+}
+
+.profile-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 350px);
+  height: 100%;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.profile-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+
+
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  float: right;
+  cursor: pointer;
+  color: #888;
+}
+
+.close-btn:hover {
+  color: #000;
+}
 
 @media (max-width: 480px) {
   .content-table th,
